@@ -1,0 +1,30 @@
+#use-added-syntax(jitx)
+defpackage jitx-2048/symbols/my_capacitor_8 :
+  import core
+  import collections
+  import jitx
+  import jitx/commands
+  import ocdb/defaults
+  import ocdb/symbols
+  import ocdb/box-symbol
+  import jitx-2048/board
+
+public pcb-symbol my_capacitor_8 :
+  pin p[1] at Point(0.0, 2.54) with :
+    direction = Up
+    length = 0.0
+    number-size = 0.761
+    name-size = 0.761
+  pin p[2] at Point(0.0, -2.54) with :
+    direction = Down
+    length = 0.0
+    number-size = 0.761
+    name-size = 0.761
+
+  layer("foreground") = Text(">VALUE", 0.762, C, loc(-1.3335, 5.0275))
+  layer("foreground") = Text(">REF", 0.762, C, loc(-1.3335, 6.0895))
+  layer("foreground") = Line(0.127, [Point(0.0, 2.54), Point(0.0, 0.508)])
+  layer("foreground") = Line(0.127, [Point(-1.27, 0.508), Point(1.27, 0.508)])
+  layer("foreground") = Line(0.127, [Point(0.0, -0.508), Point(0.0, -2.54)])
+  layer("foreground") = Line(0.127, [Point(-1.27, -0.508), Point(1.27, -0.508)])
+

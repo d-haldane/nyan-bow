@@ -1,0 +1,559 @@
+EESchema Schematic File Version 4
+LIBS:nyan-cache
+EELAYER 29 0
+EELAYER END
+$Descr A4 11693 8268
+encoding utf-8
+Sheet 1 1
+Title ""
+Date ""
+Rev ""
+Comp ""
+Comment1 ""
+Comment2 ""
+Comment3 ""
+Comment4 ""
+$EndDescr
+$Comp
+L power:GND #PWR0101
+U 1 1 5D4DA4E4
+P 7700 2100
+F 0 "#PWR0101" H 7700 1850 50  0001 C CNN
+F 1 "GND" H 7705 1927 50  0000 C CNN
+F 2 "" H 7700 2100 50  0001 C CNN
+F 3 "" H 7700 2100 50  0001 C CNN
+	1    7700 2100
+	1    0    0    -1  
+$EndComp
+Wire Wire Line
+	7700 2100 7700 1800
+$Comp
+L Device:Battery BT1
+U 1 1 5D4DA4E2
+P 7700 1600
+F 0 "BT1" H 7808 1646 50  0000 L CNN
+F 1 "Battery" H 7808 1555 50  0000 L CNN
+F 2 "Connector_JST:JST_PH_S2B-PH-SM4-TB_1x02-1MP_P2.00mm_Horizontal" V 7700 1660 50  0001 C CNN
+F 3 "~" V 7700 1660 50  0001 C CNN
+	1    7700 1600
+	1    0    0    -1  
+$EndComp
+Wire Wire Line
+	8750 1200 8750 2100
+Wire Wire Line
+	8250 2100 8250 1200
+Wire Wire Line
+	3550 2450 3550 2400
+Wire Wire Line
+	3550 2850 3550 2750
+Wire Wire Line
+	3250 4250 3250 4450
+Text Label 3950 6050 0    50   ~ 0
+MOSI_PIN0
+Text Label 2750 6200 0    50   ~ 0
+N_RESET
+Wire Wire Line
+	2550 1950 2550 2300
+Wire Wire Line
+	2550 2300 2750 2300
+Wire Wire Line
+	2750 2750 2750 2850
+Wire Wire Line
+	2750 2850 3250 2850
+Wire Wire Line
+	3250 2850 3250 3050
+$Comp
+L power:PWR_FLAG #FLG0103
+U 1 1 5D0AD126
+P 2750 2750
+F 0 "#FLG0103" H 2750 2825 50  0001 C CNN
+F 1 "PWR_FLAG" H 2750 2923 50  0000 C CNN
+F 2 "" H 2750 2750 50  0001 C CNN
+F 3 "~" H 2750 2750 50  0001 C CNN
+	1    2750 2750
+	1    0    0    -1  
+$EndComp
+NoConn ~ 3150 2200
+Text Label 3350 2400 0    50   ~ 0
+VCC
+Text Label 4000 3550 0    50   ~ 0
+SCK_PIN2
+Text Label 4000 3450 0    50   ~ 0
+MISO_PIN1
+Text Label 4000 3350 0    50   ~ 0
+MOSI_PIN0
+Wire Wire Line
+	3850 3350 4450 3350
+Wire Wire Line
+	3850 3450 4450 3450
+Wire Wire Line
+	3850 3550 4450 3550
+Wire Wire Line
+	3850 3850 4400 3850
+Text Label 3950 3850 0    50   ~ 0
+N_RESET
+NoConn ~ 3850 3750
+Text Label 4000 5900 0    50   ~ 0
+VCC
+$Comp
+L power:PWR_FLAG #FLG01
+U 1 1 5CE92236
+P 8250 1200
+F 0 "#FLG01" H 8250 1275 50  0001 C CNN
+F 1 "PWR_FLAG" H 8250 1373 50  0000 C CNN
+F 2 "" H 8250 1200 50  0001 C CNN
+F 3 "~" H 8250 1200 50  0001 C CNN
+	1    8250 1200
+	1    0    0    -1  
+$EndComp
+$Comp
+L power:GND #PWR03
+U 1 1 5CE7B60C
+P 3250 4450
+F 0 "#PWR03" H 3250 4200 50  0001 C CNN
+F 1 "GND" H 3255 4277 50  0000 C CNN
+F 2 "" H 3250 4450 50  0001 C CNN
+F 3 "" H 3250 4450 50  0001 C CNN
+	1    3250 4450
+	1    0    0    -1  
+$EndComp
+$Comp
+L power:GND #PWR07
+U 1 1 5CE4ABE6
+P 8250 2100
+F 0 "#PWR07" H 8250 1850 50  0001 C CNN
+F 1 "GND" H 8255 1927 50  0000 C CNN
+F 2 "" H 8250 2100 50  0001 C CNN
+F 3 "" H 8250 2100 50  0001 C CNN
+	1    8250 2100
+	1    0    0    -1  
+$EndComp
+$Comp
+L power:PWR_FLAG #FLG02
+U 1 1 5D4DA4DD
+P 8750 1200
+F 0 "#FLG02" H 8750 1275 50  0001 C CNN
+F 1 "PWR_FLAG" H 8750 1373 50  0000 C CNN
+F 2 "" H 8750 1200 50  0001 C CNN
+F 3 "~" H 8750 1200 50  0001 C CNN
+	1    8750 1200
+	1    0    0    -1  
+$EndComp
+$Comp
+L Device:C C1
+U 1 1 5D4DA4E8
+P 3550 2600
+F 0 "C1" H 3665 2646 50  0000 L CNN
+F 1 "0.1u" H 3665 2555 50  0000 L CNN
+F 2 "Capacitor_SMD:C_0805_2012Metric_Pad1.15x1.40mm_HandSolder" H 3588 2450 50  0001 C CNN
+F 3 "~" H 3550 2600 50  0001 C CNN
+	1    3550 2600
+	1    0    0    -1  
+$EndComp
+$Comp
+L power:GND #PWR01
+U 1 1 5D4DA4EB
+P 4200 6350
+F 0 "#PWR01" H 4200 6100 50  0001 C CNN
+F 1 "GND" H 4205 6177 50  0000 C CNN
+F 2 "" H 4200 6350 50  0001 C CNN
+F 3 "" H 4200 6350 50  0001 C CNN
+	1    4200 6350
+	1    0    0    -1  
+$EndComp
+Text Label 2750 5900 0    50   ~ 0
+MISO_PIN1
+Text Label 2750 6050 0    50   ~ 0
+SCK_PIN2
+Text Label 3350 2400 0    50   ~ 0
+VCC
+Text Label 4000 3550 0    50   ~ 0
+SCK_PIN2
+Text Label 4000 3450 0    50   ~ 0
+MISO_PIN1
+Text Label 4000 3350 0    50   ~ 0
+MOSI_PIN0
+Text Label 3950 3850 0    50   ~ 0
+N_RESET
+$Comp
+L MCU_Microchip_ATtiny:ATtiny85-20SU U1
+U 1 1 5D018D90
+P 3250 3650
+F 0 "U1" H 2721 3696 50  0000 R CNN
+F 1 "ATtiny85-20SU" H 2721 3605 50  0000 R CNN
+F 2 "Package_SO:SOIJ-8_5.3x5.3mm_P1.27mm" H 3250 3650 50  0001 C CIN
+F 3 "http://ww1.microchip.com/downloads/en/DeviceDoc/atmel-2586-avr-8-bit-microcontroller-attiny25-attiny45-attiny85_datasheet.pdf" H 3250 3650 50  0001 C CNN
+	1    3250 3650
+	1    0    0    -1  
+$EndComp
+$Comp
+L Switch:SW_SPDT SW1
+U 1 1 5D4DA4E7
+P 2950 2300
+F 0 "SW1" H 2950 2585 50  0000 C CNN
+F 1 "SW_SPDT" H 2950 2494 50  0000 C CNN
+F 2 "nyan:SW_SPDT_PCM12_SMDHOLE" H 2950 2300 50  0001 C CNN
+F 3 "~" H 2950 2300 50  0001 C CNN
+	1    2950 2300
+	1    0    0    -1  
+$EndComp
+$Comp
+L power:GND #PWR04
+U 1 1 5D4DA4E9
+P 3550 2850
+F 0 "#PWR04" H 3550 2600 50  0001 C CNN
+F 1 "GND" H 3555 2677 50  0000 C CNN
+F 2 "" H 3550 2850 50  0001 C CNN
+F 3 "" H 3550 2850 50  0001 C CNN
+	1    3550 2850
+	1    0    0    -1  
+$EndComp
+$Comp
+L nyan-rescue:Conn_02x03_Male_DNI-avnetBadge-corazones-rescue J1
+U 1 1 5D07F83B
+P 3550 6050
+F 0 "J1" H 3550 6555 50  0000 C CNN
+F 1 "Conn_02x03_Male_DNI" H 3550 6464 50  0000 C CNN
+F 2 "nyan:PinHeader_2x03_P2.54mm_Vertical_SMDcircular" H 5050 6400 50  0001 C CNN
+F 3 "~" H 5050 6400 50  0001 C CNN
+F 4 "n.f." H 3550 6373 50  0000 C CIN "Not fitted on PCB"
+	1    3550 6050
+	1    0    0    -1  
+$EndComp
+Wire Wire Line
+	2700 5900 3150 5900
+Wire Wire Line
+	2700 6050 3150 6050
+Wire Wire Line
+	2700 6200 3150 6200
+Wire Wire Line
+	3950 5900 4350 5900
+Wire Wire Line
+	3950 6050 4350 6050
+Wire Wire Line
+	3950 6200 4200 6200
+Wire Wire Line
+	4200 6200 4200 6350
+Wire Wire Line
+	7700 1400 7700 1200
+Connection ~ 3250 2400
+Wire Wire Line
+	3150 2400 3250 2400
+Wire Wire Line
+	3250 2400 3550 2400
+Connection ~ 3250 2850
+Wire Wire Line
+	3250 2400 3250 2850
+$Comp
+L power:+BATT #PWR0102
+U 1 1 5D5114AE
+P 2550 1950
+F 0 "#PWR0102" H 2550 1800 50  0001 C CNN
+F 1 "+BATT" H 2565 2123 50  0000 C CNN
+F 2 "" H 2550 1950 50  0001 C CNN
+F 3 "" H 2550 1950 50  0001 C CNN
+	1    2550 1950
+	1    0    0    -1  
+$EndComp
+$Comp
+L power:+BATT #PWR0103
+U 1 1 5D511E08
+P 7700 1200
+F 0 "#PWR0103" H 7700 1050 50  0001 C CNN
+F 1 "+BATT" H 7715 1373 50  0000 C CNN
+F 2 "" H 7700 1200 50  0001 C CNN
+F 3 "" H 7700 1200 50  0001 C CNN
+	1    7700 1200
+	1    0    0    -1  
+$EndComp
+$Comp
+L power:+BATT #PWR0105
+U 1 1 5D512641
+P 8750 2100
+F 0 "#PWR0105" H 8750 1950 50  0001 C CNN
+F 1 "+BATT" H 8765 2273 50  0000 C CNN
+F 2 "" H 8750 2100 50  0001 C CNN
+F 3 "" H 8750 2100 50  0001 C CNN
+	1    8750 2100
+	-1   0    0    1   
+$EndComp
+Wire Wire Line
+	6000 4250 6000 4100
+Connection ~ 6000 4250
+Wire Wire Line
+	7100 4250 6000 4250
+Wire Wire Line
+	7100 3950 7100 4250
+Wire Wire Line
+	6000 4100 6000 3950
+Connection ~ 6000 4100
+Wire Wire Line
+	4900 4100 6000 4100
+Wire Wire Line
+	4900 3950 4900 4100
+Wire Wire Line
+	6000 4350 6000 4250
+Wire Wire Line
+	6300 3650 6800 3650
+Wire Wire Line
+	5200 3650 5700 3650
+$Comp
+L LED:WS2812B D2
+U 1 1 5D4F2C41
+P 6000 3650
+F 0 "D2" H 6344 3696 50  0000 L CNN
+F 1 "WS2812B" H 6344 3605 50  0000 L CNN
+F 2 "nyan:LED_WS2812B_mini3535" H 6050 3350 50  0001 L TNN
+F 3 "https://cdn-shop.adafruit.com/datasheets/WS2812B.pdf" H 6100 3275 50  0001 L TNN
+	1    6000 3650
+	1    0    0    -1  
+$EndComp
+$Comp
+L LED:WS2812B D1
+U 1 1 5D4F1BFD
+P 4900 3650
+F 0 "D1" H 5244 3696 50  0000 L CNN
+F 1 "WS2812B" H 5244 3605 50  0000 L CNN
+F 2 "nyan:LED_WS2812B_mini3535" H 4950 3350 50  0001 L TNN
+F 3 "https://cdn-shop.adafruit.com/datasheets/WS2812B.pdf" H 5000 3275 50  0001 L TNN
+	1    4900 3650
+	1    0    0    -1  
+$EndComp
+$Comp
+L LED:WS2812B D3
+U 1 1 5D4D0095
+P 7100 3650
+F 0 "D3" H 7444 3696 50  0000 L CNN
+F 1 "WS2812B" H 7444 3605 50  0000 L CNN
+F 2 "nyan:LED_WS2812B_mini3535" H 7150 3350 50  0001 L TNN
+F 3 "https://cdn-shop.adafruit.com/datasheets/WS2812B.pdf" H 7200 3275 50  0001 L TNN
+	1    7100 3650
+	1    0    0    -1  
+$EndComp
+Text Label 5350 2850 0    50   ~ 0
+VCC
+Connection ~ 6000 2850
+Wire Wire Line
+	6000 2850 6000 3350
+Wire Wire Line
+	7100 2850 7100 3350
+Wire Wire Line
+	4900 3350 4900 2850
+$Comp
+L power:GND #PWR0104
+U 1 1 5D4DA4DF
+P 6000 4350
+F 0 "#PWR0104" H 6000 4100 50  0001 C CNN
+F 1 "GND" H 6005 4177 50  0000 C CNN
+F 2 "" H 6000 4350 50  0001 C CNN
+F 3 "" H 6000 4350 50  0001 C CNN
+	1    6000 4350
+	1    0    0    -1  
+$EndComp
+Wire Wire Line
+	3850 3650 4600 3650
+Wire Wire Line
+	9300 4100 9300 3950
+Connection ~ 9300 4100
+Wire Wire Line
+	8200 4100 9300 4100
+Wire Wire Line
+	8200 3950 8200 4100
+Wire Wire Line
+	9600 3650 10100 3650
+Wire Wire Line
+	8500 3650 9000 3650
+$Comp
+L LED:WS2812B D5
+U 1 1 5D95AB4B
+P 9300 3650
+F 0 "D5" H 9644 3696 50  0000 L CNN
+F 1 "WS2812B" H 9644 3605 50  0000 L CNN
+F 2 "nyan:LED_WS2812B_mini3535" H 9350 3350 50  0001 L TNN
+F 3 "https://cdn-shop.adafruit.com/datasheets/WS2812B.pdf" H 9400 3275 50  0001 L TNN
+	1    9300 3650
+	1    0    0    -1  
+$EndComp
+$Comp
+L LED:WS2812B D4
+U 1 1 5D95AB51
+P 8200 3650
+F 0 "D4" H 8544 3696 50  0000 L CNN
+F 1 "WS2812B" H 8544 3605 50  0000 L CNN
+F 2 "nyan:LED_WS2812B_mini3535" H 8250 3350 50  0001 L TNN
+F 3 "https://cdn-shop.adafruit.com/datasheets/WS2812B.pdf" H 8300 3275 50  0001 L TNN
+	1    8200 3650
+	1    0    0    -1  
+$EndComp
+Wire Wire Line
+	9300 2850 9300 3350
+Wire Wire Line
+	8200 3350 8200 2850
+$Comp
+L power:GND #PWR010
+U 1 1 5D95AB74
+P 9300 4350
+F 0 "#PWR010" H 9300 4100 50  0001 C CNN
+F 1 "GND" H 9305 4177 50  0000 C CNN
+F 2 "" H 9300 4350 50  0001 C CNN
+F 3 "" H 9300 4350 50  0001 C CNN
+	1    9300 4350
+	1    0    0    -1  
+$EndComp
+Wire Wire Line
+	9300 4100 9300 4350
+Wire Wire Line
+	9150 5850 9150 5700
+Connection ~ 9150 5850
+Wire Wire Line
+	8050 5850 9150 5850
+Wire Wire Line
+	8050 5700 8050 5850
+Wire Wire Line
+	8350 5400 8850 5400
+$Comp
+L LED:WS2812B D6
+U 1 1 5D96957E
+P 9150 5400
+F 0 "D6" H 9494 5446 50  0000 L CNN
+F 1 "WS2812B" H 9494 5355 50  0000 L CNN
+F 2 "nyan:LED_WS2812B_mini3535" H 9200 5100 50  0001 L TNN
+F 3 "https://cdn-shop.adafruit.com/datasheets/WS2812B.pdf" H 9250 5025 50  0001 L TNN
+	1    9150 5400
+	-1   0    0    -1  
+$EndComp
+$Comp
+L LED:WS2812B D7
+U 1 1 5D969584
+P 8050 5400
+F 0 "D7" H 8394 5446 50  0000 L CNN
+F 1 "WS2812B" H 8394 5355 50  0000 L CNN
+F 2 "nyan:LED_WS2812B_mini3535" H 8100 5100 50  0001 L TNN
+F 3 "https://cdn-shop.adafruit.com/datasheets/WS2812B.pdf" H 8150 5025 50  0001 L TNN
+	1    8050 5400
+	-1   0    0    -1  
+$EndComp
+Text Label 8500 4600 0    50   ~ 0
+VCC
+Wire Wire Line
+	9150 4600 9150 5100
+Wire Wire Line
+	8050 5100 8050 4600
+$Comp
+L power:GND #PWR09
+U 1 1 5D969590
+P 9150 6100
+F 0 "#PWR09" H 9150 5850 50  0001 C CNN
+F 1 "GND" H 9155 5927 50  0000 C CNN
+F 2 "" H 9150 6100 50  0001 C CNN
+F 3 "" H 9150 6100 50  0001 C CNN
+	1    9150 6100
+	1    0    0    -1  
+$EndComp
+Wire Wire Line
+	9150 5850 9150 6100
+Wire Wire Line
+	10100 3650 10100 5400
+Wire Wire Line
+	9450 5400 10100 5400
+Connection ~ 7100 2850
+$Comp
+L Device:C C4
+U 1 1 5D4D15C2
+P 6050 2150
+F 0 "C4" H 6165 2196 50  0000 L CNN
+F 1 "0.1u" H 6165 2105 50  0000 L CNN
+F 2 "Capacitor_SMD:C_0805_2012Metric_Pad1.15x1.40mm_HandSolder" H 6088 2000 50  0001 C CNN
+F 3 "~" H 6050 2150 50  0001 C CNN
+	1    6050 2150
+	1    0    0    -1  
+$EndComp
+$Comp
+L Device:C C3
+U 1 1 5D882265
+P 5600 2150
+F 0 "C3" H 5715 2196 50  0000 L CNN
+F 1 "0.1u" H 5715 2105 50  0000 L CNN
+F 2 "Capacitor_SMD:C_0805_2012Metric_Pad1.15x1.40mm_HandSolder" H 5638 2000 50  0001 C CNN
+F 3 "~" H 5600 2150 50  0001 C CNN
+	1    5600 2150
+	1    0    0    -1  
+$EndComp
+$Comp
+L Device:C C2
+U 1 1 5D97F835
+P 5100 2150
+F 0 "C2" H 5215 2196 50  0000 L CNN
+F 1 "0.1u" H 5215 2105 50  0000 L CNN
+F 2 "Capacitor_SMD:C_0805_2012Metric_Pad1.15x1.40mm_HandSolder" H 5138 2000 50  0001 C CNN
+F 3 "~" H 5100 2150 50  0001 C CNN
+	1    5100 2150
+	1    0    0    -1  
+$EndComp
+$Comp
+L power:GND #PWR02
+U 1 1 5D97F83B
+P 5100 2450
+F 0 "#PWR02" H 5100 2200 50  0001 C CNN
+F 1 "GND" H 5105 2277 50  0000 C CNN
+F 2 "" H 5100 2450 50  0001 C CNN
+F 3 "" H 5100 2450 50  0001 C CNN
+	1    5100 2450
+	1    0    0    -1  
+$EndComp
+Wire Wire Line
+	7400 3650 7900 3650
+Connection ~ 8200 2850
+NoConn ~ 7750 5400
+$Comp
+L power:GND #PWR?
+U 1 1 5D9EB2CC
+P 5600 2450
+F 0 "#PWR?" H 5600 2200 50  0001 C CNN
+F 1 "GND" H 5605 2277 50  0000 C CNN
+F 2 "" H 5600 2450 50  0001 C CNN
+F 3 "" H 5600 2450 50  0001 C CNN
+	1    5600 2450
+	1    0    0    -1  
+$EndComp
+$Comp
+L power:GND #PWR?
+U 1 1 5D9EB59D
+P 6050 2450
+F 0 "#PWR?" H 6050 2200 50  0001 C CNN
+F 1 "GND" H 6055 2277 50  0000 C CNN
+F 2 "" H 6050 2450 50  0001 C CNN
+F 3 "" H 6050 2450 50  0001 C CNN
+	1    6050 2450
+	1    0    0    -1  
+$EndComp
+Wire Wire Line
+	6000 2850 7100 2850
+Wire Wire Line
+	4900 2850 6000 2850
+Wire Wire Line
+	7100 2850 8200 2850
+Wire Wire Line
+	8200 2850 9300 2850
+Wire Wire Line
+	8050 4600 9150 4600
+Wire Wire Line
+	5100 2300 5100 2450
+Wire Wire Line
+	5600 2450 5600 2300
+Wire Wire Line
+	6050 2450 6050 2300
+Wire Wire Line
+	5100 2000 5100 1850
+Wire Wire Line
+	5100 1850 5600 1850
+Wire Wire Line
+	6050 1850 6050 2000
+Wire Wire Line
+	5600 2000 5600 1850
+Connection ~ 5600 1850
+Wire Wire Line
+	5600 1850 6050 1850
+Text Label 5750 1850 0    50   ~ 0
+VCC
+$EndSCHEMATC

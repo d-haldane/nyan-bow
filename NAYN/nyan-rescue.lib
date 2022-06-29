@@ -1,0 +1,25 @@
+EESchema-LIBRARY Version 2.4
+#encoding utf-8
+#
+# Conn_02x03_Male_DNI-avnetBadge-corazones-rescue
+#
+DEF Conn_02x03_Male_DNI-avnetBadge-corazones-rescue J 0 40 Y N 1 F N
+F0 "J" -200 350 50 H V C CNN
+F1 "Conn_02x03_Male_DNI-avnetBadge-corazones-rescue" 0 -300 50 H V C CNN
+F2 "" 1500 350 50 H I C CNN
+F3 "" 1500 350 50 H I C CNN
+$FPLIST
+ Connector*:*_1x??_*
+$ENDFPLIST
+DRAW
+S -250 250 250 -250 0 1 0 f
+X Pin_1 1 -400 150 150 R 50 50 1 1 P
+X Pin_2 2 400 150 150 L 50 50 1 1 P
+X Pin_3 3 -400 0 150 R 50 50 1 1 P
+X Pin_4 4 400 0 150 L 50 50 1 1 P
+X Pin_5 5 -400 -150 150 R 50 50 1 1 P
+X Pin_6 6 400 -150 150 L 50 50 1 1 P
+ENDDRAW
+ENDDEF
+#
+#End Library

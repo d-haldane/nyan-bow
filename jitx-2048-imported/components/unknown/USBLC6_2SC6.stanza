@@ -1,0 +1,20 @@
+#use-added-syntax(jitx)
+defpackage jitx-2048/unknown/USBLC6_2SC6 :
+  import core
+  import collections
+  import jitx
+  import jitx/commands
+  import ocdb/defaults
+  import ocdb/symbols
+  import ocdb/box-symbol
+  import jitx-2048/board
+
+public pcb-component component :
+  pin-properties :
+    [pin:Ref | side:Dir]
+    [IO1 | Left]
+    [IO2 | Right]
+    [VBUS | Up]
+    [GND | Down]
+
+  assign-symbol(jitx-2048/symbols/USBLC6_2SC6/USBLC6_2SC6)

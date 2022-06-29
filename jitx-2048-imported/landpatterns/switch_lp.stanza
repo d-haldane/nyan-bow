@@ -1,0 +1,32 @@
+#use-added-syntax(jitx)
+defpackage jitx-2048/landpatterns/switch_lp :
+  import core
+  import collections
+  import jitx
+  import jitx/commands
+  import ocdb/defaults
+  import ocdb/symbols
+  import ocdb/box-symbol
+  import jitx-2048/board
+
+pcb-pad rect-smd-pad :
+  type = SMD
+  shape = Rectangle(3.8, 1.0)
+  layer(Paste(Top)) = Rectangle(3.8, 1.0)
+
+public pcb-landpattern switch_lp :
+  pad p[1] : rect-smd-pad at loc(-5.5, 2.25) on Top
+  pad p[2] : rect-smd-pad at loc(-5.5, -2.25) on Top
+  pad p[3] : rect-smd-pad at loc(5.5, -2.25) on Top
+  pad p[4] : rect-smd-pad at loc(5.5, 2.25) on Top
+
+  layer(Courtyard(Top)) = Polygon([
+    Point(-7.65, -3.2), 
+    Point(-7.65, 3.2), 
+    Point(7.65, 3.2), 
+    Point(7.65, -3.2)])
+  layer(Silkscreen("F-SilkS", Top)) = Line(0.0762, [Point(-3.0, -3.0), Point(-3.0, 3.0)])
+  layer(Silkscreen("F-SilkS", Top)) = Line(0.0762, [Point(-3.0, 3.0), Point(3.0, 3.0)])
+  layer(Silkscreen("F-SilkS", Top)) = Line(0.0762, [Point(3.0, -3.0), Point(3.0, 3.0)])
+  layer(Silkscreen("F-SilkS", Top)) = Line(0.0762, [Point(-3.0, -3.0), Point(3.0, -3.0)])
+

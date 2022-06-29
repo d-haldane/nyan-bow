@@ -1,0 +1,34 @@
+#use-added-syntax(jitx)
+defpackage jitx-2048/symbols/my_resistor_6 :
+  import core
+  import collections
+  import jitx
+  import jitx/commands
+  import ocdb/defaults
+  import ocdb/symbols
+  import ocdb/box-symbol
+  import jitx-2048/board
+
+public pcb-symbol my_resistor_6 :
+  pin p[1] at Point(0.0, -2.54) with :
+    direction = Down
+    length = 0.0
+    number-size = 0.761
+    name-size = 0.761
+  pin p[2] at Point(0.0, 2.54) with :
+    direction = Up
+    length = 0.0
+    number-size = 0.761
+    name-size = 0.761
+
+  layer("foreground") = Text(">VALUE", 0.762, C, loc(-0.8255, 5.0275))
+  layer("foreground") = Text(">REF", 0.762, C, loc(-0.8255, 6.0895))
+  layer("foreground") = Line(0.127, [Point(0.0, -2.54), Point(0.0, -1.5875)])
+  layer("foreground") = Line(0.127, [Point(0.0, -1.5875), Point(-0.762, -1.27)])
+  layer("foreground") = Line(0.127, [Point(-0.762, -1.27), Point(0.762, -0.635)])
+  layer("foreground") = Line(0.127, [Point(0.762, -0.635), Point(-0.762, 0.0)])
+  layer("foreground") = Line(0.127, [Point(-0.762, 0.0), Point(0.762, 0.635)])
+  layer("foreground") = Line(0.127, [Point(0.762, 0.635), Point(-0.762, 1.27)])
+  layer("foreground") = Line(0.127, [Point(-0.762, 1.27), Point(0.0, 1.5875)])
+  layer("foreground") = Line(0.127, [Point(0.0, 1.5875), Point(0.0, 2.54)])
+

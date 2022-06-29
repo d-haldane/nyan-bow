@@ -1,0 +1,31 @@
+#use-added-syntax(jitx)
+defpackage jitx-2048/landpatterns/lp_USBLC6_2SC6 :
+  import core
+  import collections
+  import jitx
+  import jitx/commands
+  import ocdb/defaults
+  import ocdb/symbols
+  import ocdb/box-symbol
+  import jitx-2048/board
+
+pcb-pad rect-smd-pad :
+  type = SMD
+  shape = Rectangle(0.95, 0.52)
+  layer(Paste(Top)) = Rectangle(0.95, 0.52)
+
+public pcb-landpattern lp_USBLC6_2SC6 :
+  pad p[1] : rect-smd-pad at loc(-1.175, 0.95) on Top
+  pad p[2] : rect-smd-pad at loc(-1.175, 0.0) on Top
+  pad p[3] : rect-smd-pad at loc(-1.175, -0.95) on Top
+  pad p[4] : rect-smd-pad at loc(1.175, -0.95) on Top
+  pad p[5] : rect-smd-pad at loc(1.175, 0.0) on Top
+  pad p[6] : rect-smd-pad at loc(1.175, 0.95) on Top
+
+  layer(Courtyard(Top)) = Polygon([
+    Point(-1.9, -1.46), 
+    Point(-1.9, 1.46), 
+    Point(1.9, 1.46), 
+    Point(1.9, -1.46)])
+  layer(Silkscreen("F-SilkS", Top)) = Line(0.0762, [Point(-1.65, 1.5581), Point(-1.4976, 1.5581)])
+

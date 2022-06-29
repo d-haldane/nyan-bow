@@ -1,0 +1,21 @@
+#use-added-syntax(jitx)
+defpackage jitx-2048/unknown/AP2112 :
+  import core
+  import collections
+  import jitx
+  import jitx/commands
+  import ocdb/defaults
+  import ocdb/symbols
+  import ocdb/box-symbol
+  import jitx-2048/board
+
+public pcb-component component :
+  pin-properties :
+    [pin:Ref | side:Dir]
+    [VIN | Left]
+    [VEN | Left]
+    [VOUT | Right]
+    [GND | Down]
+    [nc | Down]
+
+  assign-symbol(jitx-2048/symbols/AP2112/AP2112)

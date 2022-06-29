@@ -1,0 +1,96 @@
+#use-added-syntax(jitx)
+defpackage jitx-2048/landpatterns/IC38_ESP32-WROOM-328MB_EXP :
+  import core
+  import collections
+  import jitx
+  import jitx/commands
+  import ocdb/defaults
+  import ocdb/symbols
+  import ocdb/box-symbol
+  import jitx-2048/board
+
+pcb-pad rect-smd-pad-1 :
+  type = SMD
+  shape = Rectangle(2.0066, 0.889)
+  layer(Paste(Top)) = Rectangle(2.0066, 0.889)
+
+pcb-pad rect-smd-pad-2 :
+  type = SMD
+  shape = Rectangle(0.889, 2.0066)
+  layer(Paste(Top)) = Rectangle(0.889, 2.0066)
+
+pcb-pad rect-smd-pad-3 :
+  type = SMD
+  shape = Rectangle(1.3208, 1.3208)
+  layer(Paste(Top)) = Rectangle(1.3208, 1.3208)
+
+public pcb-landpattern IC38_ESP32-WROOM-328MB_EXP :
+  pad p[1] : rect-smd-pad-1 at loc(-8.5, 5.7037) on Top
+  pad p[2] : rect-smd-pad-1 at loc(-8.5, 4.4337) on Top
+  pad p[3] : rect-smd-pad-1 at loc(-8.5, 3.1637) on Top
+  pad p[4] : rect-smd-pad-1 at loc(-8.5, 1.8937) on Top
+  pad p[5] : rect-smd-pad-1 at loc(-8.5, 0.6237) on Top
+  pad p[6] : rect-smd-pad-1 at loc(-8.5, -0.6463) on Top
+  pad p[7] : rect-smd-pad-1 at loc(-8.5, -1.9163) on Top
+  pad p[8] : rect-smd-pad-1 at loc(-8.5, -3.1863) on Top
+  pad p[9] : rect-smd-pad-1 at loc(-8.5, -4.4563) on Top
+  pad p[10] : rect-smd-pad-1 at loc(-8.5, -5.7263) on Top
+  pad p[11] : rect-smd-pad-1 at loc(-8.5, -6.9963) on Top
+  pad p[12] : rect-smd-pad-1 at loc(-8.5, -8.2663) on Top
+  pad p[13] : rect-smd-pad-1 at loc(-8.5, -9.5363) on Top
+  pad p[14] : rect-smd-pad-1 at loc(-8.5, -10.8063) on Top
+  pad p[15] : rect-smd-pad-2 at loc(-5.715, -12.2475) on Top
+  pad p[16] : rect-smd-pad-2 at loc(-4.445, -12.2475) on Top
+  pad p[17] : rect-smd-pad-2 at loc(-3.175, -12.2475) on Top
+  pad p[18] : rect-smd-pad-2 at loc(-1.905, -12.2475) on Top
+  pad p[19] : rect-smd-pad-2 at loc(-0.635, -12.2475) on Top
+  pad p[20] : rect-smd-pad-2 at loc(0.635, -12.2475) on Top
+  pad p[21] : rect-smd-pad-2 at loc(1.905, -12.2475) on Top
+  pad p[22] : rect-smd-pad-2 at loc(3.175, -12.2475) on Top
+  pad p[23] : rect-smd-pad-2 at loc(4.445, -12.2475) on Top
+  pad p[24] : rect-smd-pad-2 at loc(5.715, -12.2475) on Top
+  pad p[25] : rect-smd-pad-1 at loc(8.5, -10.8063) on Top
+  pad p[26] : rect-smd-pad-1 at loc(8.5, -9.5363) on Top
+  pad p[27] : rect-smd-pad-1 at loc(8.5, -8.2663) on Top
+  pad p[28] : rect-smd-pad-1 at loc(8.5, -6.9963) on Top
+  pad p[29] : rect-smd-pad-1 at loc(8.5, -5.7263) on Top
+  pad p[30] : rect-smd-pad-1 at loc(8.5, -4.4563) on Top
+  pad p[31] : rect-smd-pad-1 at loc(8.5, -3.1863) on Top
+  pad p[32] : rect-smd-pad-1 at loc(8.5, -1.9163) on Top
+  pad p[33] : rect-smd-pad-1 at loc(8.5, -0.6463) on Top
+  pad p[34] : rect-smd-pad-1 at loc(8.5, 0.6237) on Top
+  pad p[35] : rect-smd-pad-1 at loc(8.5, 1.8937) on Top
+  pad p[36] : rect-smd-pad-1 at loc(8.5, 3.1637) on Top
+  pad p[37] : rect-smd-pad-1 at loc(8.5, 4.4337) on Top
+  pad p[38] : rect-smd-pad-1 at loc(8.5, 5.7037) on Top
+  pad p[39] : rect-smd-pad-3 at loc(-2.83929, -0.40528) on Top
+  pad p[40] : rect-smd-pad-3 at loc(-1.00429, -0.40528) on Top
+  pad p[41] : rect-smd-pad-3 at loc(0.83071, -0.40528) on Top
+  pad p[42] : rect-smd-pad-3 at loc(-2.83929, -2.24028) on Top
+  pad p[43] : rect-smd-pad-3 at loc(-1.00429, -2.24028) on Top
+  pad p[44] : rect-smd-pad-3 at loc(0.83071, -2.24028) on Top
+  pad p[45] : rect-smd-pad-3 at loc(-2.83929, -4.07528) on Top
+  pad p[46] : rect-smd-pad-3 at loc(-1.00429, -4.07528) on Top
+  pad p[47] : rect-smd-pad-3 at loc(0.83071, -4.07528) on Top
+
+  layer(Courtyard(Top)) = Polygon([
+    Point(-9.7573, -13.5048), 
+    Point(-9.7573, 13.0048), 
+    Point(9.7573, 13.0048), 
+    Point(9.7573, -13.5048)])
+  layer(Courtyard(Top)) = Polygon([
+    Point(9.7573, 13.0048), 
+    Point(-9.7573, 13.0048), 
+    Point(-9.7573, -13.5048), 
+    Point(9.7573, -13.5048)])
+  layer(ForbidVia()) = Rectangle(19.558, 6.731, loc(0.0, 9.71551))
+  layer(Silkscreen("F-SilkS", Top)) = Line(0.1524, [Point(-9.1313, -12.8778), Point(-6.49224, -12.8778)])
+  layer(Silkscreen("F-SilkS", Top)) = Line(0.1524, [Point(9.1313, -12.8778), Point(9.1313, -11.58354)])
+  layer(Silkscreen("F-SilkS", Top)) = Line(0.1524, [Point(-9.1313, 12.8778), Point(9.1313, 12.8778)])
+  layer(Silkscreen("F-SilkS", Top)) = Line(0.1524, [Point(-9.1313, 6.48094), Point(-9.1313, 12.8778)])
+  layer(Silkscreen("F-SilkS", Top)) = Line(0.1524, [Point(-9.1313, -12.8778), Point(-9.1313, -11.58354)])
+  layer(Silkscreen("F-SilkS", Top)) = Line(0.1524, [Point(9.1313, 6.48094), Point(9.1313, 12.8778)])
+  layer(Silkscreen("F-SilkS", Top)) = Line(0.1524, [Point(6.49224, -12.8778), Point(9.1313, -12.8778)])
+  layer(Silkscreen("F-SilkS", Top)) = Polyline(0.508, [Arc(-9.7663, 5.7037, 0.381, 130.52000427, 98.96000672)])
+  layer(Silkscreen("B-SilkS", Bottom)) = Polyline(0.508, [Arc(-9.7663, 5.7037, 0.381, 0.0, 360.0)])
+

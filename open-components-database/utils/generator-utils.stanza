@@ -1,0 +1,198 @@
+#use-added-syntax(jitx)
+defpackage ocdb/generator-utils:
+  import core
+  import collections
+  import jitx
+  import jitx/commands
+
+  import ocdb/checks
+  import ocdb/generic-components
+
+  import jitx/powergen/gen
+
+  import ocdb/design-vars
+  import ocdb/property-structs
+  import ocdb/power-regulators
+  import ocdb/bundles
+  import ocdb/tolerance
+
+; =======================================
+; Ciruit convenience functions
+; =======================================
+
+; Add load balancing caps to crystal oscillator
+public defn add-xtal-caps (xtal:JITXObject, gnd:JITXObject, stray-capacitance:Double) :
+  inside pcb-module:
+    val c-load = load-capacitance(property(xtal.crystal-resonator))
+    val c-bal = closest-std-val(2.0 * (c-load - stray-capacitance), 5.0)
+    cap-strap(xtal.p[1], gnd, ["capacitance" => c-bal "temperature-coefficient.code" => "C0G" ])
+    val c = cap-strap(xtal.p[2], gnd, ["capacitance" => c-bal "temperature-coefficient.code" => "C0G" ])
+    c 
+; Default stray capacitance assumed 5pf. 
+public defn add-xtal-caps (xtal:JITXObject, gnd:JITXObject) :
+  add-xtal-caps(xtal, gnd, 5.0e-12)
+
+; Add pullup resistors to an open-drain bus (like i2c) to vio pin. Specced for minimum power draw meeting speed requirements [TI app note:slva689].
+public defn add-open-drain-pullups (bus:JITXObject, vio:JITXObject, clk-rate:Double, bus-capacitance:Double) :
+  inside pcb-module:
+    val rise-time = 0.35 / (clk-rate * 5.0) ; Signal bandwidth~ 5x clock rate for fairly sharp edge
+    val r = closest-std-val(rise-time / (0.8473 * bus-capacitance), 10.0)
+    pcb-module collector (r-val:Double, count:Int):
+      public inst r : chip-resistor(r-val)[count]
+    inst rs:collector(r, length(ports(bus)))
+    for (p in ports(bus), i in 0 to false) do :
+      net (rs.r[i].p[1] p)
+      net (rs.r[i].p[2] vio)
+    rs
+
+; Default is 100kHz clock rate, 100pF bus capacitance.
+public defn add-open-drain-pullups (bus:JITXObject, vio:JITXObject) :
+  add-open-drain-pullups(bus, vio, 100.0e3, 100.0e-12)
+
+; =======================================
+; Piecewise linear functions
+; Example call : PWL([[x0 y0] [x1 y1] ... [xn yn])[x]. Returns interpolated value of y at x
+; =======================================
+public deftype PWL
+public defmulti get (f:PWL, x:Double) -> Double
+public defn PWL (ps:Tuple<[Double,Double]>) -> PWL :
+  new PWL :
+    defmethod get (this, x:Double) :
+      val n = length(ps)
+      if x < ps[0][0] :
+        ; println("Warning: PWL is extrapolating with zero-order hold")
+        ps[0][1]
+      else if x >= ps[0][0] and x <= ps[n - 1][0] :
+        val i = for i in 0 to n find! :
+          ps[i][0] >= x
+        val j = for i in reverse(0 to n) find! :
+          ps[i][0] <= x
+        if i == j :
+          ps[i][1]
+        else :
+          val dydx = (ps[i][1] - ps[j][1]) / (ps[i][0] - ps[j][0])
+          dydx * (x - ps[j][0]) + ps[j][1]
+      else if x > ps[n - 1][0] :
+        ; println("Warning: PWL is extrapolating with zero-order hold")
+        ps[n - 1][1]
+      else  :
+        fatal("Something is wrong in PWL with x = %_" % [x])
+
+; =======================================
+; Assign schematic and layout groups
+; =======================================
+public defn group-modules (mods:Tuple<Tuple<JITXObject>>) :
+  inside pcb-module :
+    val g-count = to-seq(0 to false)  
+    for m in mods do :
+      val g-name = Ref("g-sg-%_" % [next(g-count)])
+      for r in m do :
+        schematic-group(r) = (g-name)
+        layout-group(r) = (g-name)
+
+public defn connect-floating-inputs-to-gnd ():
+  inside pcb-module :
+    for i in component-instances(self) do :
+      for p in pins(i) do :
+        ; println("Is %_ connected? %_" % [p, connected?(p)])
+        if not connected?(p) and
+           has-property?(p.digital-io) and
+           property(p.type) == "i" :
+          println("Connecting floating input %_ to gnd." % [p])
+          net (p, self.gnd)
+
+public defn connect-gnd-pins ():
+  inside pcb-module :
+    for i in instances(self) do :
+      for p in ports(i) do :
+        val port-name = tail(ref(p), ref-length(ref(p)) - 1)
+        if port-name == Ref("gnd") :
+          net (self.gnd, p)
+
+
+; Replace this once nets introspection is back
+public defn propagate-rail-voltage ():
+  inside pcb-module :
+    for connected-group in populated-connected-groups(self) do :
+      val power-supply-voltages = to-tuple $
+        for pin in connected-group seq? :
+          val prop = property?(pin.power-supply-pin)
+          match(value?(prop)) :
+            (p:PowerSupplyPin) : One(supply-voltage(p) as Double)
+            (_) : None() 
+      if not empty?(power-supply-voltages) :
+        val max-v = maximum(power-supply-voltages)
+        for pin in connected-group do:
+          property(pin.rail-voltage) = max-v
+
+public defn calculate-operating-points ():
+  defn get-other-pin (comp:JITXObject,  p:JITXObject) :
+    for ps in pins(comp) find! :
+      ps != p
+
+  inside pcb-module :
+    for i in component-instances(self) do :
+      if has-property?(i.resistance) or has-property?(i.capacitance) :
+        for p in pins(i) do :
+          if has-property?(p.rail-voltage) : ;and connected?([get-other-pin(i,p), property(self.gnd)])
+            if has-property?(self.gnd) :
+              if connected?([get-other-pin(i,p), property(self.gnd)]):
+                val voltage = property(p.rail-voltage)
+                if has-property?(i.resistance) :
+                  property(i.operating-point) = OperatingPoint(min-max(0.0, voltage), min-max(0.0, voltage / property(i.resistance)))
+                else if has-property?(i.capacitance) :
+                  property(i.operating-point) = OperatingPoint(min-max(0.0, voltage), min-max(0.0, 0.0))
+
+
+; =======================================
+; Attach the DNP (do not populate) to objects (components, array of instances, or module)
+; =======================================
+public defn do-not-populate (objs:Seqable<JITXObject>) :
+  inside pcb-module :
+    for obj in objs do :
+      match(instance-type(obj): SingleComponent) : property(obj.DNP) = true
+      else : do-not-populate $ component-instances(obj)
+
+public defn dnp (objs:Seqable<JITXObject>) :
+  do-not-populate(objs)
+
+; =======================================
+; Attach the power generator to designs and loads.
+; =======================================
+public defn generate-power () :
+  println("JITX: Generating power system.")
+  inside pcb-module :
+    for i in component-instances(self) do :
+      for p in pins(i) do : ; [TODO] public-pins or pins?
+        if has-property?(p.power-request) :
+          val [v a n] = property(p.power-request)
+          within (rail) = make-load("Load", v, a, n) :
+            net (p, pos(rail))
+            net (property(p.gnd-ref), neg(rail))
+
+    for i in component-instances(self) do :
+      for p in pins(i) do : ; [TODO] public-pins or pins?
+        if has-property?(p.power-input) :
+          generate-power-system(property(p.power-input), OPERATING-TEMPERATURE[1], p, property(p.gnd-ref))
+
+public defn set-power-source (pos:JITXObject, neg:JITXObject, v-in:Double):
+  inside pcb-module:
+    property(pos.power-input) = v-in
+    property(pos.gnd-ref) = neg
+    property(pos.power-supply-pin) = PowerSupplyPin(v-in, 0.3) 
+
+; =======================================
+; Run transformations to propagate voltages from sources, and run delayed evaluations
+; =======================================
+public defn run-final-passes (module:Instantiable) :
+  var intermediate-design = transform-module(propagate-rail-voltage, module)
+  set-main-module(intermediate-design)
+  intermediate-design = run-evals(intermediate-design)
+  intermediate-design = transform-module(propagate-rail-voltage, intermediate-design)
+  intermediate-design = run-evals(intermediate-design)
+  intermediate-design = transform-module(propagate-rail-voltage, intermediate-design)
+  intermediate-design = run-evals(intermediate-design)
+  val assigned-pins = assign-pins()
+  var final = run-evals(assigned-pins)
+  final = transform-module(calculate-operating-points, final)
+  final

@@ -1,0 +1,32 @@
+#use-added-syntax(jitx)
+defpackage jitx-2048/symbols/component :
+  import core
+  import collections
+  import jitx
+  import jitx/commands
+  import ocdb/defaults
+  import ocdb/symbols
+  import ocdb/box-symbol
+  import jitx-2048/board
+
+public pcb-symbol component :
+  pin p[2] at Point(0.0, 7.62) with :
+    direction = Up
+    length = 2.54
+    number-size = 0.761
+    name-size = 0.761
+  pin p[1] at Point(0.0, -5.08) with :
+    direction = Down
+    length = 2.54
+    number-size = 0.761
+    name-size = 0.761
+
+  layer("foreground") = Text(">REF", 0.762, C, loc(-0.0635, 13.696))
+  layer("foreground") = Line(0.127, [Point(0.0, 0.0), Point(0.0, -2.54)])
+  layer("foreground") = Line(0.127, [Point(0.0, 2.54), Point(0.0, 5.08)])
+  layer("foreground") = Line(0.127, [Point(0.0, 2.54), Point(2.54, 0.0)])
+  layer("foreground") = Line(0.127, [Point(0.0, 5.08), Point(0.0, 7.62)])
+  layer("foreground") = Line(0.127, [Point(0.0, 5.08), Point(0.0, 5.08)])
+  layer("foreground") = Line(0.127, [Point(0.0, -2.54), Point(0.0, -5.08)])
+  layer("foreground") = Line(0.127, [Point(0.0, -2.54), Point(0.0, -2.54)])
+

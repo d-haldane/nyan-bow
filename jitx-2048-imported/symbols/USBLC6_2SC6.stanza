@@ -1,0 +1,37 @@
+#use-added-syntax(jitx)
+defpackage jitx-2048/symbols/USBLC6_2SC6 :
+  import core
+  import collections
+  import jitx
+  import jitx/commands
+  import ocdb/defaults
+  import ocdb/symbols
+  import ocdb/box-symbol
+  import jitx-2048/board
+
+public pcb-symbol USBLC6_2SC6 :
+  pin IO1 at Point(-5.08, 0.0) with :
+    direction = Left
+    length = 2.54
+    number-size = 0.761
+    name-size = 0.761
+  pin IO2 at Point(5.08, 0.0) with :
+    direction = Right
+    length = 2.54
+    number-size = 0.761
+    name-size = 0.761
+  pin VBUS at Point(0.0, 7.62) with :
+    direction = Up
+    length = 2.54
+    number-size = 0.761
+    name-size = 0.761
+  pin GND at Point(0.0, -7.62) with :
+    direction = Down
+    length = 2.54
+    number-size = 0.761
+    name-size = 0.761
+
+  layer("foreground") = Text(">VALUE", 0.762, C, loc(-7.67, 12.634))
+  layer("foreground") = Text(">REF", 0.762, C, loc(-7.67, 13.696))
+  layer("foreground") = Rectangle(10.16, 15.24)
+

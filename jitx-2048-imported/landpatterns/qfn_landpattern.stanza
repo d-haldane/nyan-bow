@@ -1,0 +1,87 @@
+#use-added-syntax(jitx)
+defpackage jitx-2048/landpatterns/qfn_landpattern :
+  import core
+  import collections
+  import jitx
+  import jitx/commands
+  import ocdb/defaults
+  import ocdb/symbols
+  import ocdb/box-symbol
+  import jitx-2048/board
+
+pcb-pad rect-smd-pad-1 :
+  type = SMD
+  shape = Rectangle(2.7, 2.7)
+  layer(Paste(Top)) = Rectangle(2.7, 2.7)
+
+pcb-pad rect-smd-pad-2 :
+  type = SMD
+  shape = Rectangle(0.25, 0.7)
+  layer(Paste(Top)) = Rectangle(0.25, 0.7)
+
+public pcb-landpattern qfn_landpattern :
+  pad p[1] : rect-smd-pad-2 at loc(-1.95, 1.25, 270.0) on Top
+  pad p[2] : rect-smd-pad-2 at loc(-1.95, 0.75, 270.0) on Top
+  pad p[3] : rect-smd-pad-2 at loc(-1.95, 0.25, 270.0) on Top
+  pad p[4] : rect-smd-pad-2 at loc(-1.95, -0.25, 270.0) on Top
+  pad p[5] : rect-smd-pad-2 at loc(-1.95, -0.75, 270.0) on Top
+  pad p[6] : rect-smd-pad-2 at loc(-1.95, -1.25, 270.0) on Top
+  pad p[7] : rect-smd-pad-2 at loc(-1.25, -1.95) on Top
+  pad p[8] : rect-smd-pad-2 at loc(-0.75, -1.95) on Top
+  pad p[9] : rect-smd-pad-2 at loc(-0.25, -1.95) on Top
+  pad p[10] : rect-smd-pad-2 at loc(0.25, -1.95) on Top
+  pad p[11] : rect-smd-pad-2 at loc(0.75, -1.95) on Top
+  pad p[12] : rect-smd-pad-2 at loc(1.25, -1.95) on Top
+  pad p[13] : rect-smd-pad-2 at loc(1.95, -1.25, 90.0) on Top
+  pad p[14] : rect-smd-pad-2 at loc(1.95, -0.75, 90.0) on Top
+  pad p[15] : rect-smd-pad-2 at loc(1.95, -0.25, 90.0) on Top
+  pad p[16] : rect-smd-pad-2 at loc(1.95, 0.25, 90.0) on Top
+  pad p[17] : rect-smd-pad-2 at loc(1.95, 0.75, 90.0) on Top
+  pad p[18] : rect-smd-pad-2 at loc(1.95, 1.25, 90.0) on Top
+  pad p[19] : rect-smd-pad-2 at loc(1.25, 1.95, 180.0) on Top
+  pad p[20] : rect-smd-pad-2 at loc(0.75, 1.95, 180.0) on Top
+  pad p[21] : rect-smd-pad-2 at loc(0.25, 1.95, 180.0) on Top
+  pad p[22] : rect-smd-pad-2 at loc(-0.25, 1.95, 180.0) on Top
+  pad p[23] : rect-smd-pad-2 at loc(-0.75, 1.95, 180.0) on Top
+  pad p[24] : rect-smd-pad-2 at loc(-1.25, 1.95, 180.0) on Top
+  pad p[25] : rect-smd-pad-1 at loc(0.0, 0.0) on Top
+
+  layer(Courtyard(Top)) = Polygon([
+    Point(-2.0, -2.0), 
+    Point(-2.0, 2.0), 
+    Point(2.0, 2.0), 
+    Point(2.0, -2.0)])
+  layer(Silkscreen("F-SilkS", Top)) = Polygon([
+    Point(-1.83511, 2.01984), 
+    Point(-1.83127, 2.05886), 
+    Point(-1.83511, 2.09787), 
+    Point(-1.84649, 2.13539), 
+    Point(-1.86497, 2.16997), 
+    Point(-1.88985, 2.20028), 
+    Point(-1.92015, 2.22515), 
+    Point(-1.95473, 2.24363), 
+    Point(-1.99225, 2.25501), 
+    Point(-2.03127, 2.25886), 
+    Point(-2.07029, 2.25501), 
+    Point(-2.1078, 2.24363), 
+    Point(-2.14238, 2.22515), 
+    Point(-2.17269, 2.20028), 
+    Point(-2.19756, 2.16997), 
+    Point(-2.21604, 2.13539), 
+    Point(-2.22743, 2.09787), 
+    Point(-2.23127, 2.05886), 
+    Point(-2.22743, 2.01984), 
+    Point(-2.21604, 1.98232), 
+    Point(-2.19756, 1.94774), 
+    Point(-2.17269, 1.91744), 
+    Point(-2.14238, 1.89256), 
+    Point(-2.1078, 1.87408), 
+    Point(-2.07029, 1.8627), 
+    Point(-2.03127, 1.85886), 
+    Point(-1.99225, 1.8627), 
+    Point(-1.95473, 1.87408), 
+    Point(-1.92015, 1.89256), 
+    Point(-1.88985, 1.91744), 
+    Point(-1.86497, 1.94774), 
+    Point(-1.84649, 1.98232)])
+

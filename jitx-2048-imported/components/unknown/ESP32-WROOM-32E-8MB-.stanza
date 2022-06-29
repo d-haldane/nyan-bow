@@ -1,0 +1,58 @@
+#use-added-syntax(jitx)
+defpackage jitx-2048/unknown/ESP32-WROOM-32E-8MB- :
+  import core
+  import collections
+  import jitx
+  import jitx/commands
+  import ocdb/defaults
+  import ocdb/symbols
+  import ocdb/box-symbol
+  import jitx-2048/board
+
+public pcb-component component :
+  description = "ESP32-WROOM-32 (8MB)"
+  mpn = "ESP32-WROOM-32E(8MB)"
+  pin-properties :
+    [pin:Ref | pads:Ref ... | side:Dir]
+    [GND[0] | p[1] | Left]
+    [p3V3 | p[2] | Left]
+    [EN | p[3] | Left]
+    [SENSOR_VP | p[4] | Left]
+    [SENSOR_VN | p[5] | Left]
+    [IO34 | p[6] | Left]
+    [IO35 | p[7] | Left]
+    [IO32 | p[8] | Left]
+    [IO33 | p[9] | Left]
+    [IO25 | p[10] | Left]
+    [IO26 | p[11] | Left]
+    [IO27 | p[12] | Left]
+    [IO14 | p[13] | Left]
+    [IO12 | p[14] | Left]
+    [GND[1] | p[15] | Down]
+    [IO13 | p[16] | Down]
+    [NC[0] | p[17] | Down]
+    [NC[1] | p[18] | Down]
+    [NC[2] | p[19] | Down]
+    [NC[3] | p[20] | Down]
+    [NC[4] | p[21] | Down]
+    [NC[5] | p[22] | Down]
+    [IO15 | p[23] | Down]
+    [IO2 | p[24] | Down]
+    [IO0 | p[25] | Right]
+    [IO4 | p[26] | Right]
+    [IO16 | p[27] | Right]
+    [IO17 | p[28] | Right]
+    [IO5 | p[29] | Right]
+    [IO18 | p[30] | Right]
+    [IO19 | p[31] | Right]
+    [NC[6] | p[32] | Right]
+    [IO21 | p[33] | Right]
+    [RXD0 | p[34] | Right]
+    [TXD0 | p[35] | Right]
+    [IO22 | p[36] | Right]
+    [IO23 | p[37] | Right]
+    [GND[2] | p[38] | Right]
+    [EPAD | p[39] p[46] p[45] p[44] p[43] p[42] p[41] p[40] p[47] | Down]
+
+  assign-landpattern(jitx-2048/landpatterns/IC38_ESP32-WROOM-328MB_EXP/IC38_ESP32-WROOM-328MB_EXP)
+  assign-symbol(jitx-2048/symbols/ESP32-WROOM-328MB/ESP32-WROOM-328MB)

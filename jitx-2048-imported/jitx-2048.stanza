@@ -1,0 +1,571 @@
+#use-added-syntax(jitx)
+defpackage jitx-2048 :
+  import core
+  import collections
+  import jitx
+  import jitx/commands
+  import ocdb/defaults
+  import ocdb/symbols
+  import ocdb/box-symbol
+  import jitx-2048/board
+
+public pcb-module main :
+  port power : ocdb/bundles/power
+  pin IO13
+  public inst C1 : jitx-2048/TDK-Corporation/C1005X5R1E105K050BE/component
+  public inst C10 : jitx-2048/Samsung-Electro-Mechanics/CL05B104KA5NNNC-1/component
+  public inst C11 : jitx-2048/Samsung-Electro-Mechanics/CL05B104KA5NNNC-1/component
+  public inst C2 : jitx-2048/TDK-Corporation/C1005X5R1E105K050BE-1/component
+  public inst C3 : jitx-2048/Samsung-Electro-Mechanics/CL21A106KAYNNNG/component
+  public inst C4 : jitx-2048/Samsung-Electro-Mechanics/CL05B104KA5NNNC/component
+  public inst C5 : jitx-2048/Samsung-Electro-Mechanics/CL21A106KAYNNNG/component
+  public inst C6 : jitx-2048/Samsung-Electro-Mechanics/CL05B104KA5NNNC-2/component
+  public inst D2 : jitx-2048/Hubei-KENTO-Elec/C2286/component
+  public inst J1 : jitx-2048/Korean-Hroparts-Elec/TYPE-C-31-M-12/component
+  public inst J8 : jitx-2048/Keystone-Electronics/_5004/component
+  public inst Q1 : jitx-2048/_/_/component
+  public inst Q2 : jitx-2048/_/_/component
+  public inst R1 : jitx-2048/YAGEO/RC0402FR-075K1L/component
+  public inst R10 : jitx-2048/TE-Connectivity-Passive-Product/CRGCQ0402J470R/component
+  public inst R2 : jitx-2048/YAGEO/RC0402FR-075K1L/component
+  public inst R3 : jitx-2048/Vishay-Beyschlag-Draloric-BC-Components/MCS0402MD1002BE100/component
+  public inst R4 : jitx-2048/Vishay-Beyschlag-Draloric-BC-Components/MCS0402MD1002BE100-1/component
+  public inst R5 : jitx-2048/Susumu/RG1005P-472-B-T5/component
+  public inst S1 : jitx-2048/Korean-Hroparts-Elec/K2-1102SP-C4SC-04/component
+  public inst S2 : jitx-2048/Korean-Hroparts-Elec/K2-1102SP-C4SC-04/component
+  public inst U1 : jitx-2048/Diodes-Incorporated/AP2112K-3-3TRG1/component
+  public inst U2 : jitx-2048/unknown/ESP32-WROOM-32E-8MB-/component
+  public inst U3 : jitx-2048/Silicon-Labs/CP2105-F01-GM/component
+  public inst U5 : jitx-2048/ST-Microelectronics/USBLC6-2SC6/component
+  public inst c-*-1 : jitx-2048/unknown/JLCtoolinghole/component
+  public inst c-*-2 : jitx-2048/unknown/JLCtoolinghole/component
+  public inst c-*? : jitx-2048/unknown/JLCtoolinghole/component
+  public inst n : jitx-2048/unknown/JITX-1/component
+
+  net DTR_ECI (Q2.e, R3.p[1], U3.DTR_ECI)
+  net ESP-RX (U2.RXD0, U3.RXD_ECI)
+  net ESP-TX (U2.TXD0, U3.TXD_ECI)
+  net GND (power.gnd C1.p[1], C10.p[1], C11.p[1], C2.p[1], C3.p[1], C4.p[1], C5.p[1], C6.p[1], J1.A1-B12, J1.B1-A12, J1.p[13], J1.p[14], J1.p[15], J1.p[16], J1.p[17], J1.p[18], J8.p, R1.p[2], R2.p[2], S1.p[1], S2.p[1], U1.GND, U2.EPAD, U2.GND[0], U2.GND[1], U2.GND[2], U3.EPAD, U3.GND, U5.GND)
+  net Net*?_1 (c-*?.hole)
+  net Net*_1-1 (c-*-2.hole)
+  net Net*_1-2 (c-*-1.hole)
+  net Net3V3 (C2.p[2], C3.p[2], C4.p[2], R5.p[2], U1.VOUT, U2.p3V3, U3.VIO)
+  net NetD2_c (D2.c, R10.p[2])
+  net NetJ1_A5 (J1.A5, R1.p[1])
+  net NetJ1_A8 (J1.A8)
+  net NetJ1_B5 (J1.B5, R2.p[1])
+  net NetJ1_B8 (J1.B8)
+  net NetQ1_1 (Q1.b, R3.p[2])
+  net NetQ2_1 (Q2.b, R4.p[2])
+  net NetR5_1 (R5.p[1], U3.nRST)
+  net NetU1_4 (U1.nc)
+  net NetU2_10 (U2.IO25)
+  net NetU2_11 (U2.IO26)
+  net NetU2_12 (U2.IO27)
+  net NetU2_13 (U2.IO14)
+  net NetU2_14 (U2.IO12)
+  net NetU2_16 (U2.IO13 IO13)
+  net NetU2_17 (U2.NC[0])
+  net NetU2_18 (U2.NC[1])
+  net NetU2_19 (U2.NC[2])
+  net NetU2_20 (U2.NC[3])
+  net NetU2_21 (U2.NC[4])
+  net NetU2_22 (U2.NC[5])
+  net NetU2_23 (U2.IO15)
+  net NetU2_24 (U2.IO2)
+  net NetU2_26 (U2.IO4)
+  net NetU2_27 (U2.IO16)
+  net NetU2_28 (U2.IO17)
+  net NetU2_29 (U2.IO5)
+  net NetU2_32 (U2.NC[6])
+  net NetU2_33 (U2.IO21)
+  net NetU2_36 (U2.IO22)
+  net NetU2_37 (U2.IO23)
+  net NetU2_4 (U2.SENSOR_VP)
+  net NetU2_5 (U2.SENSOR_VN)
+  net NetU2_6 (U2.IO34)
+  net NetU2_7 (U2.IO35)
+  net NetU2_8 (U2.IO32)
+  net NetU2_9 (U2.IO33)
+  net NetU3_1 (U3.RI_SCI)
+  net NetU3_10 (U3.CTS_ECI)
+  net NetU3_14 (U3.DSR_ECI)
+  net NetU3_16 (U3.DCD_ECI)
+  net NetU3_17 (U3.RI_ECI)
+  net NetU3_18 (U3.CTS_SCI)
+  net NetU3_19 (U3.RTS_SCI)
+  net NetU3_20 (U3.RXD_SCI)
+  net NetU3_21 (U3.TXD_SCI)
+  net NetU3_22 (U3.DSR_SCI)
+  net NetU3_23 (U3.DTR_SCI)
+  net NetU3_24 (U3.DCD_SCI)
+  net RTS_ECI (Q1.e, R4.p[1], U3.RTS_ECI)
+  net button-io_gpio (C11.p[2], S2.p[2], U2.IO18)
+  net io0 (Q2.c, U2.IO0)
+  net led-io0_gpio (R10.p[1], U2.IO19)
+  net p5v (power.vdd C1.p[2], C5.p[2], C6.p[2], D2.a, J1.A4-B9, J1.B4-A9, U1.VEN, U1.VIN, U3.REGIN, U3.VBUS, U3.VDD, U5.VBUS)
+  net rst_reset (C10.p[2], Q1.c, S1.p[2], U2.EN)
+  net usb-d_N (J1.A7, J1.B7, U3.D-, U5.IO1)
+  net usb-d_P (J1.A6, J1.B6, U3.D+, U5.IO2)
+
+  geom(NetQ2_1) :
+    copper(LayerIndex(1)) = Line(0.127, [Point(33.8, 50.71222), Point(33.8, 52.5)])
+    copper(LayerIndex(1)) = Line(0.127, [Point(33.75, 50.66222), Point(33.8, 50.71222)])
+
+  geom(Net3V3) :
+    copper(LayerIndex(1, Bottom)) = Line(0.13132, [Point(27.25, 36.0), Point(27.25, 37.0)])
+    copper(LayerIndex(1, Bottom)) = Line(0.13132, [Point(27.25, 37.0), Point(28.0, 37.75)])
+    copper(LayerIndex(1, Bottom)) = Line(0.13132, [Point(28.0, 37.75), Point(30.25, 37.75)])
+    copper(LayerIndex(1, Bottom)) = Line(0.5, [Point(30.25, 37.75), Point(31.4365, 37.75)])
+    copper(LayerIndex(1, Bottom)) = Line(0.5, [Point(31.4365, 37.75), Point(31.5635, 37.877)])
+    copper(LayerIndex(1, Bottom)) = Line(0.5, [Point(59.5, 33.75), Point(59.75, 34.0)])
+    copper(LayerIndex(1, Bottom)) = Line(0.5, [Point(31.5635, 37.877), Point(33.123, 37.877)])
+    copper(LayerIndex(1, Bottom)) = Line(0.5, [Point(33.123, 37.877), Point(37.25, 33.75)])
+    copper(LayerIndex(1, Bottom)) = Line(0.5, [Point(37.25, 33.75), Point(59.5, 33.75)])
+    copper(LayerIndex(1)) = Line(0.13132, [Point(28.75, 37.75), Point(28.75, 38.3)])
+    copper(LayerIndex(1)) = Line(0.13132, [Point(28.75, 37.75), Point(29.0, 37.5)])
+    copper(LayerIndex(1)) = Line(0.13132, [Point(29.45012, 37.5), Point(29.70012, 37.75)])
+    copper(LayerIndex(1)) = Line(0.13132, [Point(29.70012, 37.75), Point(30.25, 37.75)])
+    copper(LayerIndex(1)) = Line(0.13132, [Point(29.0, 37.5), Point(29.45012, 37.5)])
+    copper(LayerIndex(1)) = Line(0.13132, [Point(26.91972, 36.33028), Point(26.91972, 37.0)])
+    copper(LayerIndex(1)) = Line(0.13132, [Point(26.91972, 36.33028), Point(27.25, 36.0)])
+    copper(LayerIndex(1)) = Line(0.5, [Point(38.25, 33.35), Point(38.25, 33.75)])
+    copper(LayerIndex(1)) = Line(0.5, [Point(37.29472, 32.39472), Point(38.25, 33.35)])
+    copper(LayerIndex(1)) = Line(0.5, [Point(37.0, 32.39472), Point(37.29472, 32.39472)])
+    copper(LayerIndex(1)) = Line(0.5, [Point(36.6, 36.2), Point(36.825, 36.2)])
+    copper(LayerIndex(1)) = Line(0.5, [Point(38.25, 33.75), Point(38.25, 34.775)])
+    copper(LayerIndex(1)) = Line(0.5, [Point(36.825, 36.2), Point(38.25, 34.775)])
+    copper(LayerIndex(1)) = Line(0.127, [Point(36.75, 36.35), Point(36.75, 37.75889)])
+    copper(LayerIndex(1)) = Line(0.127, [Point(36.6, 36.2), Point(36.75, 36.35)])
+    copper(LayerIndex(1)) = Line(0.5, [Point(58.0, 34.0663), Point(59.6837, 34.0663)])
+    copper(LayerIndex(1)) = Line(0.5, [Point(59.6837, 34.0663), Point(59.75, 34.0)])
+    copper(LayerIndex(1)) = Line(0.127, [Point(59.75, 34.0), Point(59.85093, 34.0)])
+    copper(LayerIndex(1)) = Line(0.127, [Point(59.85093, 34.0), Point(60.10093, 33.75)])
+    copper(LayerIndex(1)) = Line(0.127, [Point(60.10093, 33.75), Point(60.75, 33.75)])
+    via(LayerIndex(0), LayerIndex(0, Bottom), type = THVia, radius = 0.25, hole-radius = 0.15) at Point(30.25, 37.75)
+    via(LayerIndex(0), LayerIndex(0, Bottom), type = THVia, radius = 0.25, hole-radius = 0.15) at Point(27.25, 36.0)
+    via(LayerIndex(0), LayerIndex(0, Bottom), type = THVia, radius = 0.25, hole-radius = 0.15) at Point(38.25, 33.75)
+    via(LayerIndex(0), LayerIndex(0, Bottom), type = THVia, radius = 0.25, hole-radius = 0.15) at Point(59.75, 34.0)
+
+  geom(p5v) :
+    copper(LayerIndex(1, Bottom)) = Line(0.5, [Point(27.75, 33.5), Point(28.75, 33.5)])
+    copper(LayerIndex(1, Bottom)) = Line(0.5, [Point(28.75, 33.5), Point(30.5, 35.25)])
+    copper(LayerIndex(1, Bottom)) = Line(0.5, [Point(32.5, 37.25), Point(32.75, 37.25)])
+    copper(LayerIndex(1, Bottom)) = Line(0.5, [Point(30.5, 35.25), Point(32.5, 37.25)])
+    copper(LayerIndex(1)) = Line(0.127, [Point(29.325, 35.25), Point(30.5, 35.25)])
+    copper(LayerIndex(1)) = Line(0.127, [Point(29.3, 38.25), Point(32.02139, 38.25)])
+    copper(LayerIndex(1)) = Line(0.127, [Point(29.25, 38.3), Point(29.3, 38.25)])
+    copper(LayerIndex(1)) = Line(0.127, [Point(30.75, 39.0), Point(30.75, 39.0)])
+    copper(LayerIndex(1)) = Line(0.127, [Point(29.95, 39.0), Point(30.75, 39.0)])
+    copper(LayerIndex(1)) = Line(0.5, [Point(27.94, 31.946), Point(27.94, 33.20907)])
+    copper(LayerIndex(1)) = Line(0.127, [Point(27.75, 33.39907), Point(27.75, 33.5)])
+    copper(LayerIndex(1)) = Line(0.5, [Point(27.75, 33.39907), Point(27.94, 33.20907)])
+    copper(LayerIndex(1)) = Line(0.127, [Point(33.675, 36.2), Point(33.9, 36.2)])
+    copper(LayerIndex(1)) = Line(0.127, [Point(32.02139, 37.72861), Point(32.02139, 38.25)])
+    copper(LayerIndex(1)) = Line(0.127, [Point(30.75, 39.5), Point(30.75, 39.5)])
+    copper(LayerIndex(1)) = Line(0.127, [Point(29.95, 39.5), Point(30.75, 39.5)])
+    copper(LayerIndex(1)) = Line(0.127, [Point(32.02139, 37.72861), Point(32.25, 37.5)])
+    copper(LayerIndex(1)) = Line(0.5, [Point(32.84, 31.946), Point(32.89, 31.996)])
+    copper(LayerIndex(1)) = Line(0.5, [Point(32.89, 31.996), Point(32.89, 33.14)])
+    copper(LayerIndex(1)) = Line(0.5, [Point(32.89, 33.14), Point(33.25, 33.5)])
+    copper(LayerIndex(1)) = Line(0.5, [Point(34.70711, 33.5), Point(35.0, 33.79289)])
+    copper(LayerIndex(1)) = Line(0.5, [Point(34.70711, 37.0), Point(35.0, 36.7071)])
+    copper(LayerIndex(1)) = Line(0.5, [Point(35.0, 33.79289), Point(35.0, 36.7071)])
+    copper(LayerIndex(1)) = Line(0.5, [Point(33.9, 34.3), Point(33.92855, 34.3)])
+    copper(LayerIndex(1)) = Line(0.5, [Point(33.97855, 33.5), Point(33.97855, 34.25)])
+    copper(LayerIndex(1)) = Line(0.5, [Point(33.92855, 34.3), Point(33.97855, 34.25)])
+    copper(LayerIndex(1)) = Line(0.5, [Point(33.25, 33.5), Point(33.97855, 33.5)])
+    copper(LayerIndex(1)) = Line(0.5, [Point(33.97855, 33.5), Point(34.70711, 33.5)])
+    copper(LayerIndex(1)) = Line(0.127, [Point(35.0, 37.29289), Point(35.0, 38.28107)])
+    copper(LayerIndex(1)) = Line(0.127, [Point(34.70711, 37.0), Point(35.0, 37.29289)])
+    copper(LayerIndex(1)) = Line(0.5, [Point(33.75, 37.0), Point(34.70711, 37.0)])
+    copper(LayerIndex(1)) = Line(0.5, [Point(32.25, 37.5), Point(32.39907, 37.5)])
+    copper(LayerIndex(1)) = Line(0.127, [Point(32.64907, 37.25), Point(32.75, 37.25)])
+    copper(LayerIndex(1)) = Line(0.5, [Point(33.0, 37.0), Point(33.75, 37.0)])
+    copper(LayerIndex(1)) = Line(0.127, [Point(32.75, 37.25), Point(33.0, 37.25)])
+    copper(LayerIndex(1)) = Line(0.5, [Point(32.75, 37.25), Point(32.82137, 37.17863)])
+    copper(LayerIndex(1)) = Line(0.5, [Point(32.39907, 37.5), Point(32.64907, 37.25)])
+    copper(LayerIndex(1)) = Line(0.5, [Point(32.82137, 37.05363), Point(32.82137, 37.17863)])
+    copper(LayerIndex(1)) = Line(0.5, [Point(32.82137, 37.05363), Point(33.675, 36.2)])
+    copper(LayerIndex(1)) = Line(0.5, [Point(32.82137, 37.17863), Point(33.0, 37.0)])
+    via(LayerIndex(0), LayerIndex(0, Bottom), type = THVia, radius = 0.25, hole-radius = 0.15) at Point(30.5, 35.25)
+    via(LayerIndex(0), LayerIndex(0, Bottom), type = THVia, radius = 0.25, hole-radius = 0.15) at Point(27.75, 33.5)
+    via(LayerIndex(0), LayerIndex(0, Bottom), type = THVia, radius = 0.25, hole-radius = 0.15) at Point(32.75, 37.25)
+
+  geom(ESP-RX) :
+    copper(LayerIndex(1, Bottom)) = Line(0.127, [Point(37.25, 41.0), Point(37.25, 42.25)])
+    copper(LayerIndex(1)) = Line(0.127, [Point(30.51983, 41.84484), Point(30.59484, 41.84484)])
+    copper(LayerIndex(1)) = Line(0.127, [Point(29.95, 41.5), Point(30.175, 41.5)])
+    copper(LayerIndex(1)) = Line(0.127, [Point(30.175, 41.5), Point(30.51983, 41.84484)])
+    copper(LayerIndex(1)) = Line(0.127, [Point(37.25, 39.75), Point(39.1237, 37.8763)])
+    copper(LayerIndex(1)) = Line(0.127, [Point(37.25, 39.75), Point(37.25, 41.0)])
+    copper(LayerIndex(1)) = Line(0.127, [Point(39.1237, 37.8763), Point(41.0, 37.8763)])
+    copper(LayerIndex(1)) = Line(0.127, [Point(31.25, 42.5), Point(36.9891, 42.5)])
+    copper(LayerIndex(1)) = Line(0.127, [Point(30.59484, 41.84484), Point(31.25, 42.5)])
+    copper(LayerIndex(1)) = Line(0.127, [Point(37.2391, 42.25), Point(37.25, 42.25)])
+    copper(LayerIndex(1)) = Line(0.127, [Point(36.9891, 42.5), Point(37.2391, 42.25)])
+    via(LayerIndex(0), LayerIndex(0, Bottom), type = THVia, radius = 0.25, hole-radius = 0.15) at Point(37.25, 42.25)
+    via(LayerIndex(0), LayerIndex(0, Bottom), type = THVia, radius = 0.25, hole-radius = 0.15) at Point(37.25, 41.0)
+
+  geom(NetR5_1) :
+    copper(LayerIndex(1, Bottom)) = Line(0.127, [Point(29.57453, 40.25), Point(31.0, 40.25)])
+    copper(LayerIndex(1, Bottom)) = Line(0.127, [Point(26.0, 38.0), Point(27.32453, 38.0)])
+    copper(LayerIndex(1, Bottom)) = Line(0.127, [Point(27.32453, 38.0), Point(29.57453, 40.25)])
+    copper(LayerIndex(1)) = Line(0.127, [Point(30.5, 40.0), Point(30.75, 40.25)])
+    copper(LayerIndex(1)) = Line(0.127, [Point(30.75, 40.25), Point(31.0, 40.25)])
+    copper(LayerIndex(1)) = Line(0.127, [Point(29.95, 40.0), Point(30.5, 40.0)])
+    copper(LayerIndex(1)) = Line(0.127, [Point(26.0, 37.0), Point(26.0, 38.0)])
+    via(LayerIndex(0), LayerIndex(0, Bottom), type = THVia, radius = 0.25, hole-radius = 0.15) at Point(31.0, 40.25)
+    via(LayerIndex(0), LayerIndex(0, Bottom), type = THVia, radius = 0.25, hole-radius = 0.15) at Point(26.0, 38.0)
+
+  geom(io0) :
+    copper(LayerIndex(1)) = Line(0.127, [Point(34.75, 54.5), Point(36.0, 54.5)])
+    copper(LayerIndex(1)) = Line(0.127, [Point(37.4437, 49.3063), Point(41.0, 49.3063)])
+    copper(LayerIndex(1)) = Line(0.127, [Point(36.75, 50.0), Point(37.4437, 49.3063)])
+    copper(LayerIndex(1)) = Line(0.127, [Point(36.0, 54.5), Point(36.75, 53.75)])
+    copper(LayerIndex(1)) = Line(0.127, [Point(36.75, 50.0), Point(36.75, 53.75)])
+
+  geom(usb-d_N) :
+    copper(LayerIndex(1)) = Line(0.13132, [Point(30.64, 31.946), Point(30.64, 33.64)])
+    copper(LayerIndex(1)) = Line(0.13132, [Point(30.64, 33.64), Point(31.0, 34.0)])
+    copper(LayerIndex(1)) = Line(0.13132, [Point(28.25, 37.25), Point(28.5, 37.0)])
+    copper(LayerIndex(1)) = Line(0.13132, [Point(28.25, 37.25), Point(28.25, 38.3)])
+    copper(LayerIndex(1)) = Line(0.13132, [Point(30.95, 34.3), Point(31.0, 34.25)])
+    copper(LayerIndex(1)) = Line(0.13132, [Point(29.325, 34.3), Point(30.95, 34.3)])
+    copper(LayerIndex(1)) = Line(0.13132, [Point(31.0, 34.0), Point(31.0, 34.25)])
+    copper(LayerIndex(1)) = Line(0.13132, [Point(31.0, 34.25), Point(31.05, 34.3)])
+    copper(LayerIndex(1)) = Line(0.13132, [Point(31.05, 34.3), Point(31.675, 34.3)])
+    copper(LayerIndex(1)) = Line(0.13132, [Point(29.64, 30.89), Point(29.64, 31.946)])
+    copper(LayerIndex(1)) = Line(0.13132, [Point(29.25, 30.5), Point(29.64, 30.89)])
+    copper(LayerIndex(1)) = Line(0.13132, [Point(29.25, 29.5), Point(29.25, 30.5)])
+    copper(LayerIndex(1)) = Line(0.13132, [Point(29.25, 29.5), Point(29.5, 29.25)])
+    copper(LayerIndex(1)) = Line(0.13132, [Point(29.5, 29.25), Point(30.0, 29.25)])
+    copper(LayerIndex(1)) = Line(0.13132, [Point(30.32, 29.57), Point(30.32, 29.94602)])
+    copper(LayerIndex(1)) = Line(0.13132, [Point(30.32, 29.94602), Point(30.64, 30.26602)])
+    copper(LayerIndex(1)) = Line(0.13132, [Point(30.64, 30.26602), Point(30.64, 31.946)])
+    copper(LayerIndex(1)) = Line(0.13132, [Point(30.0, 29.25), Point(30.32, 29.57)])
+    copper(LayerIndex(1)) = Line(0.13132, [Point(30.25, 37.0), Point(31.0, 36.25)])
+    copper(LayerIndex(1)) = Line(0.13132, [Point(28.5, 37.0), Point(30.25, 37.0)])
+    copper(LayerIndex(1)) = Line(0.13132, [Point(31.0, 34.3), Point(31.0, 36.25)])
+    copper(LayerIndex(1)) = Line(0.13132, [Point(31.0, 34.25), Point(31.0, 34.3)])
+
+  geom(rst_reset) :
+    copper(LayerIndex(1, Bottom)) = Line(0.127, [Point(42.75, 35.5), Point(51.25, 35.5)])
+    copper(LayerIndex(1, Bottom)) = Line(0.127, [Point(38.0, 40.25), Point(42.75, 35.5)])
+    copper(LayerIndex(1, Bottom)) = Line(0.127, [Point(38.0, 41.75), Point(38.0, 42.75)])
+    copper(LayerIndex(1, Bottom)) = Line(0.127, [Point(38.0, 40.25), Point(38.0, 41.75)])
+    copper(LayerIndex(1, Bottom)) = Line(0.127, [Point(38.0, 41.75), Point(38.0, 42.75)])
+    copper(LayerIndex(1)) = Line(0.13132, [Point(31.93434, 46.25), Point(34.5, 46.25)])
+    copper(LayerIndex(1)) = Line(0.13132, [Point(31.5, 46.68434), Point(31.93434, 46.25)])
+    copper(LayerIndex(1)) = Line(0.13132, [Point(31.5, 46.68434), Point(31.5, 47.0)])
+    copper(LayerIndex(1)) = Line(0.13132, [Point(31.5, 53.25), Point(31.5, 58.0)])
+    copper(LayerIndex(1)) = Line(0.13132, [Point(31.5, 47.0), Point(31.5, 49.5)])
+    copper(LayerIndex(1)) = Line(0.127, [Point(51.25, 35.5), Point(51.4137, 35.3363)])
+    copper(LayerIndex(1)) = Line(0.127, [Point(51.4137, 35.3363), Point(58.0, 35.3363)])
+    copper(LayerIndex(1)) = Line(0.127, [Point(34.5, 45.47861), Point(35.27139, 45.47861)])
+    copper(LayerIndex(1)) = Line(0.127, [Point(35.27139, 45.47861), Point(38.0, 42.75)])
+    copper(LayerIndex(1)) = Line(0.13132, [Point(34.5, 44.70722), Point(34.5, 45.47861)])
+    copper(LayerIndex(1)) = Line(0.13132, [Point(34.5, 45.47861), Point(34.5, 46.25)])
+    copper(LayerIndex(1)) = Line(0.13132, [Point(32.75, 50.75), Point(32.75, 52.0)])
+    copper(LayerIndex(1)) = Line(0.13132, [Point(31.5, 49.5), Point(32.75, 50.75)])
+    copper(LayerIndex(1)) = Line(0.13132, [Point(31.5, 53.25), Point(32.75, 52.0)])
+    via(LayerIndex(0), LayerIndex(0, Bottom), type = THVia, radius = 0.25, hole-radius = 0.15) at Point(51.25, 35.5)
+    via(LayerIndex(0), LayerIndex(0, Bottom), type = THVia, radius = 0.25, hole-radius = 0.15) at Point(38.0, 42.75)
+
+  geom(usb-d_P) :
+    copper(LayerIndex(1, Bottom)) = Line(0.13132, [Point(29.75, 30.0), Point(31.0, 30.0)])
+    copper(LayerIndex(1, Bottom)) = Line(0.13132, [Point(30.07512, 37.0), Point(31.25, 37.0)])
+    copper(LayerIndex(1, Bottom)) = Line(0.13132, [Point(28.0, 36.5), Point(28.75, 37.25)])
+    copper(LayerIndex(1, Bottom)) = Line(0.13132, [Point(29.82512, 37.25), Point(30.07512, 37.0)])
+    copper(LayerIndex(1, Bottom)) = Line(0.13132, [Point(28.75, 37.25), Point(29.82512, 37.25)])
+    copper(LayerIndex(1)) = Line(0.13132, [Point(27.75, 36.75), Point(27.75, 38.3)])
+    copper(LayerIndex(1)) = Line(0.13132, [Point(29.275, 36.25), Point(29.325, 36.2)])
+    copper(LayerIndex(1)) = Line(0.13132, [Point(30.14, 31.946), Point(30.14, 33.11)])
+    copper(LayerIndex(1)) = Line(0.13132, [Point(28.5, 33.75), Point(28.5, 36.25)])
+    copper(LayerIndex(1)) = Line(0.13132, [Point(28.25, 36.25), Point(28.5, 36.25)])
+    copper(LayerIndex(1)) = Line(0.13132, [Point(28.5, 36.25), Point(29.275, 36.25)])
+    copper(LayerIndex(1)) = Line(0.13132, [Point(27.75, 36.75), Point(28.0, 36.5)])
+    copper(LayerIndex(1)) = Line(0.13132, [Point(28.0, 36.5), Point(28.25, 36.25)])
+    copper(LayerIndex(1)) = Line(0.13132, [Point(29.74384, 33.50616), Point(30.14, 33.11)])
+    copper(LayerIndex(1)) = Line(0.13132, [Point(28.74384, 33.50616), Point(29.74384, 33.50616)])
+    copper(LayerIndex(1)) = Line(0.13132, [Point(28.5, 33.75), Point(28.74384, 33.50616)])
+    copper(LayerIndex(1)) = Line(0.13132, [Point(31.14, 30.14), Point(31.14, 31.946)])
+    copper(LayerIndex(1)) = Line(0.13132, [Point(31.0, 30.0), Point(31.14, 30.14)])
+    copper(LayerIndex(1)) = Line(0.13132, [Point(29.75, 30.0), Point(30.14, 30.39)])
+    copper(LayerIndex(1)) = Line(0.13132, [Point(30.14, 30.39), Point(30.14, 31.946)])
+    copper(LayerIndex(1)) = Line(0.13132, [Point(31.58214, 36.79288), Point(31.675, 36.70002)])
+    copper(LayerIndex(1)) = Line(0.13132, [Point(31.55689, 36.79288), Point(31.58214, 36.79288)])
+    copper(LayerIndex(1)) = Line(0.13132, [Point(31.25, 37.0), Point(31.34976, 37.0)])
+    copper(LayerIndex(1)) = Line(0.13132, [Point(31.34976, 37.0), Point(31.55689, 36.79288)])
+    copper(LayerIndex(1)) = Line(0.13132, [Point(31.675, 36.2), Point(31.675, 36.70002)])
+    via(LayerIndex(0), LayerIndex(0, Bottom), type = THVia, radius = 0.25, hole-radius = 0.15) at Point(28.0, 36.5)
+    via(LayerIndex(0), LayerIndex(0, Bottom), type = THVia, radius = 0.25, hole-radius = 0.15) at Point(31.0, 30.0)
+    via(LayerIndex(0), LayerIndex(0, Bottom), type = THVia, radius = 0.25, hole-radius = 0.15) at Point(29.75, 30.0)
+    via(LayerIndex(0), LayerIndex(0, Bottom), type = THVia, radius = 0.25, hole-radius = 0.15) at Point(31.25, 37.0)
+
+  geom(RTS_ECI) :
+    copper(LayerIndex(1, Bottom)) = Line(0.127, [Point(33.25, 42.5), Point(33.25, 47.0)])
+    copper(LayerIndex(1, Bottom)) = Line(0.127, [Point(33.25, 42.5), Point(33.75, 42.0)])
+    copper(LayerIndex(1)) = Line(0.127, [Point(29.95, 41.0), Point(30.75, 41.0)])
+    copper(LayerIndex(1)) = Line(0.127, [Point(30.75, 41.0), Point(31.0, 41.25)])
+    copper(LayerIndex(1)) = Line(0.127, [Point(33.55, 48.25), Point(33.75, 48.45)])
+    copper(LayerIndex(1)) = Line(0.127, [Point(33.75, 48.45), Point(33.75, 49.75)])
+    copper(LayerIndex(1)) = Line(0.127, [Point(31.0, 41.746), Point(31.5, 42.246)])
+    copper(LayerIndex(1)) = Line(0.127, [Point(31.0, 41.25), Point(31.0, 41.746)])
+    copper(LayerIndex(1)) = Line(0.127, [Point(33.25, 47.0), Point(33.25, 47.53615)])
+    copper(LayerIndex(1)) = Line(0.127, [Point(33.3135, 47.59965), Point(33.3135, 48.0135)])
+    copper(LayerIndex(1)) = Line(0.127, [Point(33.3135, 48.0135), Point(33.55, 48.25)])
+    copper(LayerIndex(1)) = Line(0.127, [Point(33.25, 47.53615), Point(33.3135, 47.59965)])
+    copper(LayerIndex(1)) = Line(0.127, [Point(33.504, 42.246), Point(33.75, 42.0)])
+    copper(LayerIndex(1)) = Line(0.127, [Point(31.5, 42.246), Point(33.504, 42.246)])
+    via(LayerIndex(0), LayerIndex(0, Bottom), type = THVia, radius = 0.25, hole-radius = 0.15) at Point(33.25, 47.0)
+    via(LayerIndex(0), LayerIndex(0, Bottom), type = THVia, radius = 0.25, hole-radius = 0.15) at Point(33.75, 42.0)
+
+  geom(GND) :
+    copper(LayerIndex(1, Bottom)) = Line(0.5, [Point(32.75, 35.25), Point(33.28, 34.72)])
+    copper(LayerIndex(1, Bottom)) = Line(0.5, [Point(33.28, 30.5), Point(33.28, 31.03)])
+    copper(LayerIndex(1, Bottom)) = Line(0.5, [Point(33.28, 31.03), Point(33.28, 34.72)])
+    copper(LayerIndex(1, Bottom)) = Line(0.5, [Point(26.07, 30.76131), Point(26.07, 31.03)])
+    copper(LayerIndex(1, Bottom)) = Line(0.5, [Point(26.07, 30.76131), Point(26.25478, 30.57654)])
+    copper(LayerIndex(1, Bottom)) = Line(0.5, [Point(26.25478, 30.57654), Point(27.42347, 30.57654)])
+    copper(LayerIndex(1, Bottom)) = Line(0.5, [Point(27.42347, 30.57654), Point(27.5, 30.5)])
+    copper(LayerIndex(1, Bottom)) = Line(0.5, [Point(27.5, 30.5), Point(27.60824, 30.5)])
+    copper(LayerIndex(1, Bottom)) = Line(0.5, [Point(27.60824, 30.5), Point(28.13824, 31.03)])
+    copper(LayerIndex(1, Bottom)) = Line(0.5, [Point(28.13824, 31.03), Point(33.28, 31.03)])
+    copper(LayerIndex(1, Bottom)) = Line(0.127, [Point(26.25, 32.91824), Point(28.13824, 31.03)])
+    copper(LayerIndex(1, Bottom)) = Line(0.127, [Point(26.25, 32.91824), Point(26.25, 36.0)])
+    copper(LayerIndex(1, Bottom)) = Line(0.5, [Point(33.28, 31.03), Point(34.71, 31.03)])
+    copper(LayerIndex(1, Bottom)) = Line(0.5, [Point(27.57654, 29.42346), Point(28.0, 29.0)])
+    copper(LayerIndex(1, Bottom)) = Line(0.5, [Point(27.57654, 29.42346), Point(27.57654, 30.42346)])
+    copper(LayerIndex(1, Bottom)) = Line(0.5, [Point(27.5, 30.5), Point(27.57654, 30.42346)])
+    copper(LayerIndex(1, Bottom)) = Line(0.5, [Point(28.0, 27.0), Point(28.0, 29.0)])
+    copper(LayerIndex(1, Bottom)) = Line(0.5, [Point(26.07, 26.85), Point(34.71, 26.85)])
+    copper(LayerIndex(1)) = Line(0.127, [Point(31.675, 35.25), Point(32.75, 35.25)])
+    copper(LayerIndex(1)) = Line(0.5, [Point(32.75, 35.25), Point(33.9, 35.25)])
+    copper(LayerIndex(1)) = Line(0.5, [Point(27.14, 30.9355), Point(27.5, 30.5755)])
+    copper(LayerIndex(1)) = Line(0.5, [Point(27.14, 30.9355), Point(27.14, 31.946)])
+    copper(LayerIndex(1)) = Line(0.127, [Point(27.5, 30.5), Point(27.5, 30.5755)])
+    copper(LayerIndex(1)) = Line(0.127, [Point(26.07, 30.85708), Point(26.07, 31.03)])
+    copper(LayerIndex(1)) = Line(0.127, [Point(26.07, 30.85708), Point(26.42708, 30.5)])
+    copper(LayerIndex(1)) = Line(0.127, [Point(33.4035, 31.7095), Point(33.64, 31.946)])
+    copper(LayerIndex(1)) = Line(0.127, [Point(33.28, 30.5), Point(33.4035, 30.6235)])
+    copper(LayerIndex(1)) = Line(0.127, [Point(33.4035, 30.6235), Point(33.4035, 31.7095)])
+    copper(LayerIndex(1)) = Line(0.127, [Point(26.0, 35.20986), Point(26.10986, 35.20986)])
+    copper(LayerIndex(1)) = Line(0.127, [Point(27.39014, 35.20986), Point(27.5, 35.20986)])
+    copper(LayerIndex(1)) = Line(0.127, [Point(32.97861, 38.25), Point(32.97861, 38.34111)])
+    copper(LayerIndex(1)) = Line(0.127, [Point(32.99111, 39.67139), Point(32.99111, 39.75)])
+    copper(LayerIndex(1)) = Line(0.127, [Point(33.64, 31.6625), Point(33.64, 31.946)])
+    copper(LayerIndex(1)) = Line(0.127, [Point(33.64, 31.6625), Point(33.8765, 31.426)])
+    copper(LayerIndex(1)) = Line(0.5, [Point(33.8765, 31.426), Point(34.35292, 31.426)])
+    copper(LayerIndex(1)) = Line(0.127, [Point(34.35292, 31.426), Point(34.71, 31.06892)])
+    copper(LayerIndex(1)) = Line(0.127, [Point(34.71, 31.03), Point(34.71, 31.06892)])
+    copper(LayerIndex(1)) = Line(0.5, [Point(48.66929, 38.90528), Point(48.66929, 40.74028)])
+    copper(LayerIndex(1)) = Line(0.5, [Point(48.66929, 40.74028), Point(48.66929, 42.57528)])
+    copper(LayerIndex(1)) = Line(0.5, [Point(50.50429, 38.90528), Point(50.50429, 40.74028)])
+    copper(LayerIndex(1)) = Line(0.5, [Point(50.50429, 40.74028), Point(50.50429, 42.57528)])
+    copper(LayerIndex(1)) = Line(0.5, [Point(52.33929, 38.90528), Point(52.33929, 40.74028)])
+    copper(LayerIndex(1)) = Line(0.5, [Point(52.33929, 40.74028), Point(52.33929, 42.57528)])
+    copper(LayerIndex(1)) = Line(0.5, [Point(48.66929, 38.90528), Point(50.50429, 38.90528)])
+    copper(LayerIndex(1)) = Line(0.5, [Point(50.50429, 38.90528), Point(52.33929, 38.90528)])
+    copper(LayerIndex(1)) = Line(0.5, [Point(50.50429, 32.80059), Point(50.50429, 38.90528)])
+    copper(LayerIndex(1)) = Line(0.5, [Point(50.5, 32.7963), Point(50.50429, 32.80059)])
+    copper(LayerIndex(1)) = Line(0.5, [Point(41.0, 32.7963), Point(50.5, 32.7963)])
+    copper(LayerIndex(1)) = Line(0.5, [Point(50.5, 32.7963), Point(58.0, 32.7963)])
+    copper(LayerIndex(1)) = Line(0.127, [Point(26.10986, 35.20986), Point(26.2365, 35.3365)])
+    copper(LayerIndex(1)) = Line(0.127, [Point(26.2365, 35.3365), Point(26.2365, 35.9865)])
+    copper(LayerIndex(1)) = Line(0.127, [Point(26.2365, 35.9865), Point(26.25, 36.0)])
+    copper(LayerIndex(1)) = Line(0.127, [Point(26.25, 36.0), Point(26.25948, 35.99052)])
+    copper(LayerIndex(1)) = Line(0.127, [Point(26.60948, 35.99052), Point(27.39014, 35.20986)])
+    copper(LayerIndex(1)) = Line(0.127, [Point(26.25948, 35.99052), Point(26.60948, 35.99052)])
+    copper(LayerIndex(1)) = Line(0.127, [Point(27.25, 38.3), Point(27.25, 39.5)])
+    copper(LayerIndex(1)) = Line(0.127, [Point(27.25, 39.5), Point(28.0, 40.25)])
+    copper(LayerIndex(1)) = Line(0.5, [Point(34.71, 30.79006), Point(34.71, 31.03)])
+    copper(LayerIndex(1)) = Line(0.5, [Point(34.89477, 30.60528), Point(37.0, 30.60528)])
+    copper(LayerIndex(1)) = Line(0.5, [Point(34.71, 30.79006), Point(34.89477, 30.60528)])
+    copper(LayerIndex(1)) = Line(0.5, [Point(38.5, 32.0), Point(39.2963, 32.7963)])
+    copper(LayerIndex(1)) = Line(0.5, [Point(39.2963, 32.7963), Point(41.0, 32.7963)])
+    copper(LayerIndex(1)) = Line(0.5, [Point(38.5, 31.0), Point(38.5, 32.0)])
+    copper(LayerIndex(1)) = Line(0.5, [Point(38.2071, 30.7071), Point(38.5, 31.0)])
+    copper(LayerIndex(1)) = Line(0.5, [Point(37.10182, 30.7071), Point(38.2071, 30.7071)])
+    copper(LayerIndex(1)) = Line(0.5, [Point(37.0, 30.60528), Point(37.10182, 30.7071)])
+    copper(LayerIndex(1)) = Line(0.127, [Point(58.0, 32.7963), Point(60.74648, 32.7963)])
+    copper(LayerIndex(1)) = Line(0.127, [Point(60.74648, 32.7963), Point(60.75, 32.79278)])
+    copper(LayerIndex(1)) = Line(0.127, [Point(36.75, 38.74111), Point(36.75, 39.25)])
+    copper(LayerIndex(1)) = Line(0.127, [Point(36.5, 39.5), Point(36.75, 39.25)])
+    copper(LayerIndex(1)) = Line(0.127, [Point(36.25, 39.5), Point(36.5, 39.5)])
+    copper(LayerIndex(1)) = Line(0.25, [Point(32.5, 43.39472), Point(32.5, 44.5)])
+    copper(LayerIndex(1)) = Line(0.5, [Point(55.215, 48.965), Point(55.215, 50.7475)])
+    copper(LayerIndex(1)) = Line(0.5, [Point(52.5, 46.25), Point(55.215, 48.965)])
+    copper(LayerIndex(1)) = Line(0.5, [Point(51.5, 46.25), Point(52.5, 46.25)])
+    copper(LayerIndex(1)) = Line(0.5, [Point(50.50429, 42.57528), Point(50.50429, 45.25429)])
+    copper(LayerIndex(1)) = Line(0.5, [Point(50.50429, 45.25429), Point(51.5, 46.25)])
+    copper(LayerIndex(1)) = Line(0.127, [Point(32.97861, 38.34111), Point(33.6375, 39.0)])
+    copper(LayerIndex(1)) = Line(0.127, [Point(32.99111, 39.67139), Point(33.6625, 39.0)])
+    copper(LayerIndex(1)) = Line(0.127, [Point(33.6625, 39.0), Point(33.75, 39.0)])
+    copper(LayerIndex(1)) = Line(0.127, [Point(33.6375, 39.0), Point(33.6625, 39.0)])
+    via(LayerIndex(0), LayerIndex(0, Bottom), type = THVia, radius = 0.25, hole-radius = 0.15) at Point(32.75, 35.25)
+    via(LayerIndex(0), LayerIndex(0, Bottom), type = THVia, radius = 0.3, hole-radius = 0.15) at Point(28.0, 40.25)
+    via(LayerIndex(0), LayerIndex(0, Bottom), type = THVia, radius = 0.25, hole-radius = 0.15) at Point(26.25, 36.0)
+    via(LayerIndex(0), LayerIndex(0, Bottom), type = THVia, radius = 0.25, hole-radius = 0.15) at Point(36.25, 39.5)
+    via(LayerIndex(0), LayerIndex(0, Bottom), type = THVia, radius = 0.25, hole-radius = 0.15) at Point(32.5, 44.5)
+    via(LayerIndex(0), LayerIndex(0, Bottom), type = THVia, radius = 0.3, hole-radius = 0.15) at Point(27.0, 50.5)
+    via(LayerIndex(0), LayerIndex(0, Bottom), type = THVia, radius = 0.3, hole-radius = 0.15) at Point(33.0, 63.25)
+    via(LayerIndex(0), LayerIndex(0, Bottom), type = THVia, radius = 0.25, hole-radius = 0.15) at Point(33.75, 39.0)
+
+  geom(button-io_gpio) :
+    copper(LayerIndex(1)) = Line(0.127, [Point(39.25, 59.52139), Point(39.25, 62.0)])
+    copper(LayerIndex(1)) = Line(0.127, [Point(39.22861, 59.5), Point(39.25, 59.52139)])
+    copper(LayerIndex(1)) = Line(0.127, [Point(36.0, 45.75), Point(38.7937, 42.9563)])
+    copper(LayerIndex(1)) = Line(0.127, [Point(38.7937, 42.9563), Point(41.0, 42.9563)])
+    copper(LayerIndex(1)) = Line(0.127, [Point(36.0, 45.75), Point(36.0, 51.5)])
+    copper(LayerIndex(1)) = Line(0.127, [Point(36.0, 51.5), Point(36.496, 51.996)])
+    copper(LayerIndex(1)) = Line(0.127, [Point(36.496, 51.996), Point(36.496, 53.0)])
+    copper(LayerIndex(1)) = Line(0.127, [Point(35.996, 53.5), Point(36.496, 53.0)])
+    copper(LayerIndex(1)) = Line(0.127, [Point(33.0, 53.75), Point(33.25, 53.5)])
+    copper(LayerIndex(1)) = Line(0.127, [Point(33.25, 53.5), Point(35.996, 53.5)])
+    copper(LayerIndex(1)) = Line(0.127, [Point(33.0, 53.75), Point(33.0, 62.0)])
+    copper(LayerIndex(1)) = Line(0.127, [Point(28.25, 62.0), Point(33.0, 62.0)])
+    copper(LayerIndex(1)) = Line(0.127, [Point(33.0, 62.0), Point(39.25, 62.0)])
+
+  geom(DTR_ECI) :
+    copper(LayerIndex(1, Bottom)) = Line(0.127, [Point(31.5, 51.5), Point(35.0, 51.5)])
+    copper(LayerIndex(1)) = Line(0.127, [Point(35.25, 52.00001), Point(35.7, 52.45)])
+    copper(LayerIndex(1)) = Line(0.127, [Point(35.7, 52.45), Point(35.7, 52.5)])
+    copper(LayerIndex(1)) = Line(0.127, [Point(35.0, 51.5), Point(35.10093, 51.5)])
+    copper(LayerIndex(1)) = Line(0.127, [Point(35.24787, 51.35306), Point(35.25, 51.35306)])
+    copper(LayerIndex(1)) = Line(0.127, [Point(35.10093, 51.5), Point(35.24787, 51.35306)])
+    copper(LayerIndex(1)) = Line(0.127, [Point(35.25, 50.70611), Point(35.25, 51.35306)])
+    copper(LayerIndex(1)) = Line(0.127, [Point(35.25, 51.35306), Point(35.25, 52.00001)])
+    copper(LayerIndex(1)) = Line(0.127, [Point(28.25, 42.2), Point(28.25, 48.25)])
+    copper(LayerIndex(1)) = Line(0.127, [Point(28.25, 48.25), Point(31.5, 51.5)])
+    via(LayerIndex(0), LayerIndex(0, Bottom), type = THVia, radius = 0.25, hole-radius = 0.15) at Point(35.0, 51.5)
+    via(LayerIndex(0), LayerIndex(0, Bottom), type = THVia, radius = 0.25, hole-radius = 0.15) at Point(31.5, 51.5)
+
+  geom(led-io0_gpio) :
+    copper(LayerIndex(1)) = Line(0.127, [Point(36.5, 41.25), Point(36.9363, 41.6863)])
+    copper(LayerIndex(1)) = Line(0.127, [Point(36.9363, 41.6863), Point(41.0, 41.6863)])
+    copper(LayerIndex(1)) = Line(0.127, [Point(35.25, 41.25), Point(36.5, 41.25)])
+
+  geom(NetJ1_B5) :
+    copper(LayerIndex(1, Bottom)) = Line(0.127, [Point(26.69052, 28.80948), Point(26.94052, 28.80948)])
+    copper(LayerIndex(1, Bottom)) = Line(0.127, [Point(26.94052, 28.80948), Point(27.0, 28.75)])
+    copper(LayerIndex(1, Bottom)) = Line(0.127, [Point(25.49995, 30.00005), Point(26.69052, 28.80948)])
+    copper(LayerIndex(1, Bottom)) = Line(0.127, [Point(25.49995, 30.00005), Point(25.49995, 30.00005)])
+    copper(LayerIndex(1, Bottom)) = Line(0.127, [Point(25.4295, 30.0705), Point(25.4295, 32.87)])
+    copper(LayerIndex(1, Bottom)) = Line(0.127, [Point(25.4295, 32.87), Point(25.8095, 33.25)])
+    copper(LayerIndex(1, Bottom)) = Line(0.127, [Point(25.4295, 30.0705), Point(25.49995, 30.00005)])
+    copper(LayerIndex(1)) = Line(0.127, [Point(31.25, 28.75), Point(32.14, 29.64)])
+    copper(LayerIndex(1)) = Line(0.127, [Point(32.14, 29.64), Point(32.14, 31.946)])
+    copper(LayerIndex(1)) = Line(0.127, [Point(27.0, 28.75), Point(31.25, 28.75)])
+    copper(LayerIndex(1)) = Line(0.127, [Point(25.8095, 33.35093), Point(26.0, 33.54143)])
+    copper(LayerIndex(1)) = Line(0.127, [Point(26.0, 33.54143), Point(26.0, 34.29014)])
+    copper(LayerIndex(1)) = Line(0.127, [Point(25.8095, 33.25), Point(25.8095, 33.35093)])
+    via(LayerIndex(0), LayerIndex(0, Bottom), type = THVia, radius = 0.25, hole-radius = 0.15) at Point(27.0, 28.75)
+    via(LayerIndex(0), LayerIndex(0, Bottom), type = THVia, radius = 0.25, hole-radius = 0.15) at Point(25.8095, 33.25)
+
+  geom(NetD2_c) :
+    copper(LayerIndex(1)) = Line(0.127, [Point(34.78107, 39.71893), Point(35.0, 39.71893)])
+    copper(LayerIndex(1)) = Line(0.127, [Point(34.5885, 39.9115), Point(34.78107, 39.71893)])
+    copper(LayerIndex(1)) = Line(0.127, [Point(34.33028, 40.66972), Point(34.33028, 41.25)])
+    copper(LayerIndex(1)) = Line(0.127, [Point(34.33028, 40.66972), Point(34.5885, 40.4115)])
+    copper(LayerIndex(1)) = Line(0.127, [Point(34.5885, 39.9115), Point(34.5885, 40.4115)])
+
+  geom(NetQ1_1) :
+    copper(LayerIndex(1)) = Line(0.127, [Point(35.25, 48.44999), Point(35.45, 48.25)])
+    copper(LayerIndex(1)) = Line(0.127, [Point(35.25, 48.44999), Point(35.25, 49.79389)])
+
+  geom(ESP-TX) :
+    copper(LayerIndex(1, Bottom)) = Line(0.127, [Point(36.25, 40.5), Point(36.25, 42.9405)])
+    copper(LayerIndex(1)) = Line(0.127, [Point(29.25, 42.425), Point(29.3115, 42.4865)])
+    copper(LayerIndex(1)) = Line(0.127, [Point(29.25, 42.2), Point(29.25, 42.425)])
+    copper(LayerIndex(1)) = Line(0.127, [Point(39.3937, 36.6063), Point(41.0, 36.6063)])
+    copper(LayerIndex(1)) = Line(0.127, [Point(39.0, 37.0), Point(39.3937, 36.6063)])
+    copper(LayerIndex(1)) = Line(0.127, [Point(39.0, 37.0), Point(39.0, 37.5)])
+    copper(LayerIndex(1)) = Line(0.127, [Point(36.996, 39.504), Point(39.0, 37.5)])
+    copper(LayerIndex(1)) = Line(0.127, [Point(36.996, 39.504), Point(36.996, 39.754)])
+    copper(LayerIndex(1)) = Line(0.127, [Point(36.25, 40.5), Point(36.996, 39.754)])
+    copper(LayerIndex(1)) = Line(0.127, [Point(30.2365, 42.4865), Point(30.504, 42.754)])
+    copper(LayerIndex(1)) = Line(0.127, [Point(29.3115, 42.4865), Point(30.2365, 42.4865)])
+    copper(LayerIndex(1)) = Line(0.127, [Point(35.98911, 42.754), Point(36.1756, 42.9405)])
+    copper(LayerIndex(1)) = Line(0.127, [Point(36.1756, 42.9405), Point(36.25, 42.9405)])
+    copper(LayerIndex(1)) = Line(0.127, [Point(30.504, 42.754), Point(35.98911, 42.754)])
+    via(LayerIndex(0), LayerIndex(0, Bottom), type = THVia, radius = 0.25, hole-radius = 0.15) at Point(36.25, 40.5)
+    via(LayerIndex(0), LayerIndex(0, Bottom), type = THVia, radius = 0.25, hole-radius = 0.15) at Point(36.25, 42.9405)
+
+  geom(NetJ1_A5) :
+    copper(LayerIndex(1)) = Line(0.127, [Point(28.18712, 33.70062), Point(28.18712, 33.71288)])
+    copper(LayerIndex(1)) = Line(0.127, [Point(27.5, 34.29014), Point(27.60986, 34.29014)])
+    copper(LayerIndex(1)) = Line(0.127, [Point(28.18712, 33.70062), Point(28.63774, 33.25)])
+    copper(LayerIndex(1)) = Line(0.127, [Point(27.60986, 34.29014), Point(28.18712, 33.71288)])
+    copper(LayerIndex(1)) = Line(0.127, [Point(29.0741, 32.0119), Point(29.14, 31.946)])
+    copper(LayerIndex(1)) = Line(0.127, [Point(29.14, 31.946), Point(29.14, 32.89)])
+    copper(LayerIndex(1)) = Line(0.127, [Point(28.78, 33.25), Point(29.14, 32.89)])
+    copper(LayerIndex(1)) = Line(0.127, [Point(28.63774, 33.25), Point(28.78, 33.25)])
+
+  place(n) at loc(59.7408, 37.4904, 180.0) on Bottom
+  place(c-*-1) at loc(26.25, 64.25) on Top
+  place(c-*?) at loc(60.5, 66.75) on Top
+  place(c-*-2) at loc(60.75, 27.0) on Top
+  place(U5) at loc(30.5, 35.25, 180.0) on Top
+  place(U3) at loc(28.0, 40.25, 90.0) on Top
+  place(U1) at loc(35.25, 35.25, 270.0) on Top
+  place(S2) at loc(33.75, 64.25) on Top
+  place(S1) at loc(29.25, 52.5, 90.0) on Top
+  place(R10) at loc(34.79014, 41.25, 270.0) on Top
+  place(R5) at loc(26.45986, 37.0, 90.0) on Top
+  place(R4) at loc(33.75, 50.20611, 180.0) on Top
+  place(R3) at loc(35.25, 50.25) on Top
+  place(R2) at loc(26.0, 34.75, 180.0) on Top
+  place(R1) at loc(27.5, 34.75, 180.0) on Top
+  place(Q2) at loc(34.75, 53.5) on Top
+  place(Q1) at loc(34.5, 47.25, 180.0) on Top
+  place(J8) at loc(35.0, 58.0) on Top
+  place(J1) at loc(27.14, 31.946) on Top
+  place(D2) at loc(35.0, 39.0, 180.0) on Top
+  place(C11) at loc(38.75, 59.5, 90.0) on Top
+  place(C10) at loc(34.5, 44.22861, 180.0) on Top
+  place(C6) at loc(32.5, 38.25, 270.0) on Top
+  place(C5) at loc(32.5, 42.5) on Top
+  place(C4) at loc(60.75, 33.27139, 180.0) on Top
+  place(C3) at loc(37.0, 31.5, 180.0) on Top
+  place(C2) at loc(36.75, 38.25) on Top
+  place(C1) at loc(32.5, 39.75, 270.0) on Top
+  place(U2) at loc(49.5, 38.5, 180.0) on Top
+
+  reference-designator(c-*-1) = "*"
+  reference-designator(c-*-2) = "*/"
+  reference-designator(c-*?) = "*?"
+  reference-designator(n) = "/n"
+  reference-designator(C1) = "C1"
+  reference-designator(C2) = "C2"
+  reference-designator(C3) = "C3"
+  reference-designator(C4) = "C4"
+  reference-designator(C5) = "C5"
+  reference-designator(C6) = "C6"
+  reference-designator(C10) = "C10"
+  reference-designator(C11) = "C11"
+  reference-designator(D2) = "D2"
+  reference-designator(J1) = "J1"
+  reference-designator(J8) = "J8"
+  reference-designator(Q1) = "Q1"
+  reference-designator(Q2) = "Q2"
+  reference-designator(R1) = "R1"
+  reference-designator(R2) = "R2"
+  reference-designator(R3) = "R3"
+  reference-designator(R4) = "R4"
+  reference-designator(R5) = "R5"
+  reference-designator(R10) = "R10"
+  reference-designator(S1) = "S1"
+  reference-designator(S2) = "S2"
+  reference-designator(U1) = "U1"
+  reference-designator(U2) = "U2"
+  reference-designator(U3) = "U3"
+  reference-designator(U5) = "U5"
+
+set-design-directory("jitx-2048")
+set-export-backend(`altium)
+make-default-board(main, 4, Rectangle(300.0, 200.0))
+view-board()
+view-schematic()
+export-cad()
+

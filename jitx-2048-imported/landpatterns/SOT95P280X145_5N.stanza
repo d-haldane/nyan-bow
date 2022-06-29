@@ -1,0 +1,62 @@
+#use-added-syntax(jitx)
+defpackage jitx-2048/landpatterns/SOT95P280X145_5N :
+  import core
+  import collections
+  import jitx
+  import jitx/commands
+  import ocdb/defaults
+  import ocdb/symbols
+  import ocdb/box-symbol
+  import jitx-2048/board
+
+pcb-pad rect-smd-pad :
+  type = SMD
+  shape = Rectangle(0.6, 1.05)
+  layer(Paste(Top)) = Rectangle(0.6, 1.05)
+
+public pcb-landpattern SOT95P280X145_5N :
+  pad p[1] : rect-smd-pad at loc(-0.95, -1.35) on Top
+  pad p[2] : rect-smd-pad at loc(0.0, -1.35) on Top
+  pad p[3] : rect-smd-pad at loc(0.95, -1.35) on Top
+  pad p[4] : rect-smd-pad at loc(0.95, 1.35) on Top
+  pad p[5] : rect-smd-pad at loc(-0.95, 1.35) on Top
+
+  layer(Courtyard(Top)) = Polygon([
+    Point(-1.35, -1.975), 
+    Point(-1.35, 1.975), 
+    Point(1.35, 1.975), 
+    Point(1.35, -1.975)])
+  layer(Silkscreen("F-SilkS", Top)) = Polygon([
+    Point(-0.75384, -2.38902), 
+    Point(-0.75, -2.35), 
+    Point(-0.75384, -2.31098), 
+    Point(-0.76522, -2.27346), 
+    Point(-0.7837, -2.23889), 
+    Point(-0.80858, -2.20858), 
+    Point(-0.83889, -2.1837), 
+    Point(-0.87346, -2.16522), 
+    Point(-0.91098, -2.15384), 
+    Point(-0.95, -2.15), 
+    Point(-0.98902, -2.15384), 
+    Point(-1.02654, -2.16522), 
+    Point(-1.06111, -2.1837), 
+    Point(-1.09142, -2.20858), 
+    Point(-1.11629, -2.23889), 
+    Point(-1.13478, -2.27346), 
+    Point(-1.14615, -2.31098), 
+    Point(-1.15, -2.35), 
+    Point(-1.14615, -2.38902), 
+    Point(-1.13478, -2.42654), 
+    Point(-1.11629, -2.46111), 
+    Point(-1.09142, -2.49142), 
+    Point(-1.06111, -2.51629), 
+    Point(-1.02654, -2.53478), 
+    Point(-0.98902, -2.54616), 
+    Point(-0.95, -2.55), 
+    Point(-0.91098, -2.54616), 
+    Point(-0.87346, -2.53478), 
+    Point(-0.83889, -2.51629), 
+    Point(-0.80858, -2.49142), 
+    Point(-0.7837, -2.46111), 
+    Point(-0.76522, -2.42654)])
+

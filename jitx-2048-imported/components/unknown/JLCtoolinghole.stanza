@@ -1,0 +1,19 @@
+#use-added-syntax(jitx)
+defpackage jitx-2048/unknown/JLCtoolinghole :
+  import core
+  import collections
+  import jitx
+  import jitx/commands
+  import ocdb/defaults
+  import ocdb/symbols
+  import ocdb/box-symbol
+  import jitx-2048/board
+
+public pcb-component component :
+  description = "JLCtoolinghole"
+  pin-properties :
+    [pin:Ref | pads:Ref ... | side:Dir]
+    [hole | p[1] | Right]
+
+  assign-landpattern(jitx-2048/landpatterns/JLCtoolinghole/JLCtoolinghole)
+  assign-symbol(jitx-2048/symbols/JLCtoolinghole/JLCtoolinghole)

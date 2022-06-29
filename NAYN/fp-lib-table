@@ -1,0 +1,3 @@
+(fp_lib_table
+  (lib (name nyan)(type KiCad)(uri ${KIPRJMOD}/nyan.pretty)(options "")(descr ""))
+)

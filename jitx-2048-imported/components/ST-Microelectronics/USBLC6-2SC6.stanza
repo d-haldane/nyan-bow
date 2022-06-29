@@ -1,0 +1,24 @@
+#use-added-syntax(jitx)
+defpackage jitx-2048/ST-Microelectronics/USBLC6-2SC6 :
+  import core
+  import collections
+  import jitx
+  import jitx/commands
+  import ocdb/defaults
+  import ocdb/symbols
+  import ocdb/box-symbol
+  import jitx-2048/board
+
+public pcb-component component :
+  description = "USBLC6-2SC6"
+  manufacturer = "ST Microelectronics"
+  mpn = "USBLC6-2SC6"
+  pin-properties :
+    [pin:Ref | pads:Ref ... | side:Dir]
+    [IO1 | p[6] p[1] | Left]
+    [IO2 | p[4] p[3] | Right]
+    [VBUS | p[5] | Up]
+    [GND | p[2] | Down]
+
+  assign-landpattern(jitx-2048/landpatterns/lp_USBLC6_2SC6/lp_USBLC6_2SC6)
+  assign-symbol(jitx-2048/symbols/USBLC6_2SC6/USBLC6_2SC6)

@@ -1,0 +1,27 @@
+#use-added-syntax(jitx)
+defpackage jitx-2048/landpatterns/ipc_two_pin_landpattern :
+  import core
+  import collections
+  import jitx
+  import jitx/commands
+  import ocdb/defaults
+  import ocdb/symbols
+  import ocdb/box-symbol
+  import jitx-2048/board
+
+pcb-pad rect-smd-pad :
+  type = SMD
+  shape = Rectangle(0.95, 0.51213)
+  layer(Paste(Top)) = Rectangle(0.95, 0.51213)
+
+public pcb-landpattern ipc_two_pin_landpattern :
+  pad a : rect-smd-pad at loc(0.0, 0.71893) on Top
+  pad c : rect-smd-pad at loc(0.0, -0.71893) on Top
+
+  layer(Courtyard(Top)) = Polygon([
+    Point(-0.725, -1.225), 
+    Point(-0.725, 1.225), 
+    Point(0.725, 1.225), 
+    Point(0.725, -1.225)])
+  layer(Silkscreen("F-SilkS", Top)) = Line(0.0762, [Point(-0.5869, 1.4731), Point(-0.3583, 1.4731)])
+

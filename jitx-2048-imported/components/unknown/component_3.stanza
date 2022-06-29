@@ -1,0 +1,41 @@
+#use-added-syntax(jitx)
+defpackage jitx-2048/unknown/component_3 :
+  import core
+  import collections
+  import jitx
+  import jitx/commands
+  import ocdb/defaults
+  import ocdb/symbols
+  import ocdb/box-symbol
+  import jitx-2048/board
+
+public pcb-component component :
+  pin-properties :
+    [pin:Ref | side:Dir]
+    [VBUS | Left]
+    [D+ | Left]
+    [D- | Left]
+    [VIO | Left]
+    [nRST | Left]
+    [RI_SCI | Right]
+    [CTS_ECI | Right]
+    [RTS_ECI | Right]
+    [RXD_ECI | Right]
+    [TXD_ECI | Right]
+    [DSR_ECI | Right]
+    [DTR_ECI | Right]
+    [DCD_ECI | Right]
+    [RI_ECI | Right]
+    [CTS_SCI | Right]
+    [RTS_SCI | Right]
+    [RXD_SCI | Right]
+    [TXD_SCI | Right]
+    [DSR_SCI | Right]
+    [DTR_SCI | Right]
+    [DCD_SCI | Right]
+    [REGIN | Up]
+    [VDD | Up]
+    [GND | Down]
+    [EPAD | Down]
+
+  assign-symbol(jitx-2048/symbols/component_3/component_3)

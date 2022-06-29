@@ -1,0 +1,17 @@
+#use-added-syntax(jitx)
+defpackage jitx-2048/unknown/keystone_500x_pkg :
+  import core
+  import collections
+  import jitx
+  import jitx/commands
+  import ocdb/defaults
+  import ocdb/symbols
+  import ocdb/box-symbol
+  import jitx-2048/board
+
+public pcb-component component :
+  pin-properties :
+    [pin:Ref | pads:Ref ...]
+    [p | p]
+
+  assign-landpattern(jitx-2048/landpatterns/keystone_500x_pkg/keystone_500x_pkg)
