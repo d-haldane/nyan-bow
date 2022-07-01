@@ -1,0 +1,65 @@
+#use-added-syntax(jitx)
+defpackage NAYN/unknown/pinIndicatorHeart :
+  import core
+  import collections
+  import jitx
+  import jitx/commands
+  import ocdb/defaults
+  import ocdb/symbols
+  import ocdb/box-symbol
+  import NAYN/board
+
+public pcb-landpattern pinIndicatorHeart :
+  layer(Silkscreen("F-SilkS", Top)) = Text(">REF", 1.27, C, loc(0.0, 0.0))
+  layer(Silkscreen("F-SilkS", Top)) = Text(">VALUE", 1.27, C, loc(0.0, 0.0))
+  layer(Silkscreen("F-SilkS", Top)) = Line(0.01, [    
+    Point(-13.366952, 17.464742), 
+    Point(-13.301361, 17.415374), 
+    Point(-13.247104, 17.346665), 
+    Point(-13.213899, 17.269721), 
+    Point(-13.208118, 17.225426), 
+    Point(-13.215906, 17.148301), 
+    Point(-13.241755, 17.073435), 
+    Point(-13.28998, 16.992964), 
+    Point(-13.364896, 16.899022), 
+    Point(-13.422056, 16.835504), 
+    Point(-13.492526, 16.758223), 
+    Point(-13.554844, 16.687659), 
+    Point(-13.601773, 16.632142), 
+    Point(-13.624719, 16.602163), 
+    Point(-13.656907, 16.564632), 
+    Point(-13.683512, 16.551967), 
+    Point(-13.694829, 16.568717), 
+    Point(-13.694833, 16.569299), 
+    Point(-13.70849, 16.590463), 
+    Point(-13.745717, 16.635733), 
+    Point(-13.8009, 16.698552), 
+    Point(-13.868424, 16.772361), 
+    Point(-13.871512, 16.775674), 
+    Point(-13.964809, 16.878536), 
+    Point(-14.03176, 16.960287), 
+    Point(-14.077283, 17.028365), 
+    Point(-14.106291, 17.090206), 
+    Point(-14.123701, 17.153248), 
+    Point(-14.124808, 17.158927), 
+    Point(-14.1259, 17.257366), 
+    Point(-14.095589, 17.348257), 
+    Point(-14.039801, 17.421614), 
+    Point(-13.964462, 17.467453), 
+    Point(-13.937436, 17.474632), 
+    Point(-13.857374, 17.471832), 
+    Point(-13.780638, 17.439958), 
+    Point(-13.723381, 17.386765), 
+    Point(-13.711685, 17.366232), 
+    Point(-13.68667, 17.323819), 
+    Point(-13.663752, 17.321225), 
+    Point(-13.636047, 17.358688), 
+    Point(-13.630367, 17.369056), 
+    Point(-13.576777, 17.430127), 
+    Point(-13.500314, 17.471713), 
+    Point(-13.434155, 17.483666), 
+    Point(-13.366952, 17.464742), 
+    Point(-13.366952, 17.464742)])
+  
+public pcb-component component :
+  assign-landpattern(pinIndicatorHeart)

@@ -1,0 +1,17 @@
+#use-added-syntax(jitx)
+defpackage NAYN/unknown/pinPin-1 :
+  import core
+  import collections
+  import jitx
+  import jitx/commands
+  import ocdb/defaults
+  import ocdb/symbols
+  import ocdb/box-symbol
+  import NAYN/board
+
+public pcb-landpattern pinPin-1 :
+  layer(Silkscreen("B-SilkS", Top)) = Text(">REF", 1.0, C, loc(0.0, -0.5))
+  layer(Finish(Top)) = Text(">VALUE", 1.0, C, loc(0.0, 0.5))
+  
+public pcb-component component :
+  assign-landpattern(pinPin-1)

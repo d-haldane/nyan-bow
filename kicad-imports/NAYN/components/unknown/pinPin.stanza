@@ -1,0 +1,29 @@
+#use-added-syntax(jitx)
+defpackage NAYN/unknown/pinPin :
+  import core
+  import collections
+  import jitx
+  import jitx/commands
+  import ocdb/defaults
+  import ocdb/symbols
+  import ocdb/box-symbol
+  import NAYN/board
+
+pcb-pad oval-smd-pad :
+  type = SMD
+  shape = Capsule(2.0, 3.0, loc(0.0, 0.0))
+  layer(Paste(Top)) = Capsule(2.0, 3.0, loc(0.0, 0.0))
+  layer(SolderMask(Top)) = Capsule(2.0, 3.0, loc(0.0, 0.0))
+
+public pcb-landpattern pinPin :
+  pad p[1] : oval-smd-pad at loc(0.0, 0.0) on Top
+  
+  layer(Silkscreen("F-SilkS", Top)) = Text(">REF", 1.0, C, loc(0.0, -0.5))
+  layer(Finish(Top)) = Text(">VALUE", 1.0, C, loc(0.0, 0.5))
+  
+public pcb-component component :
+  pin-properties :
+    [pin:Ref | pads:Ref ...]
+    [p[1] | p[1]]
+    
+  assign-landpattern(pinPin)

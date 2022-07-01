@@ -1,0 +1,30 @@
+(module lp_USBLC6_2SC6 (layer F.Cu)  
+  (pad 1 smd rect
+    (at -1.175 -0.95 0.0)
+    (size 0.95 0.52)
+    (layers F.Cu F.Paste))
+  (pad 2 smd rect
+    (at -1.175 0.0 0.0)
+    (size 0.95 0.52)
+    (layers F.Cu F.Paste))
+  (pad 3 smd rect
+    (at -1.175 0.95 0.0)
+    (size 0.95 0.52)
+    (layers F.Cu F.Paste))
+  (pad 4 smd rect
+    (at 1.175 0.95 0.0)
+    (size 0.95 0.52)
+    (layers F.Cu F.Paste))
+  (pad 5 smd rect
+    (at 1.175 0.0 0.0)
+    (size 0.95 0.52)
+    (layers F.Cu F.Paste))
+  (pad 6 smd rect
+    (at 1.175 -0.95 0.0)
+    (size 0.95 0.52)
+    (layers F.Cu F.Paste))  
+  (fp_line (start -1.9 1.46) (end -1.9 -1.46) (layer F.CrtYd) (width 0.05))
+  (fp_line (start -1.9 -1.46) (end 1.9 -1.46) (layer F.CrtYd) (width 0.05))
+  (fp_line (start 1.9 -1.46) (end 1.9 1.46) (layer F.CrtYd) (width 0.05))
+  (fp_line (start 1.9 1.46) (end -1.9 1.46) (layer F.CrtYd) (width 0.05))
+  (fp_line (start -1.65 -1.5581) (end -1.4976 -1.5581) (layer F.SilkS) (width 0.0762)))

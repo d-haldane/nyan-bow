@@ -1,0 +1,29 @@
+#use-added-syntax(jitx)
+defpackage NAYN/board :
+  import core
+  import collections
+  import jitx
+  import jitx/commands
+  import ocdb/defaults
+  import ocdb/symbols
+  import ocdb/box-symbol
+  import NAYN/board
+
+pcb-material copper :
+  type = Conductor
+
+pcb-material prepreg-1 :
+  type = Dielectric
+  dielectric-coefficient = 4.5
+  loss-tangent = 0.02
+
+pcb-stackup kicad-project-stackup :
+  layer(0.035, copper)
+  layer(1.51, prepreg-1)
+  layer(0.035, copper)
+
+public pcb-board kicad-project-board :
+  stackup = kicad-project-stackup
+  boundary = Rectangle(300.0, 200.0)
+  signal-boundary = Rectangle(300.0, 200.0)
+

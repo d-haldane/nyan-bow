@@ -1,0 +1,3 @@
+(fp_lib_table
+  (lib (name NAYN)(type KiCad)(uri "$(KIPRJMOD)/NAYN.pretty")(options "")(descr ""))
+)

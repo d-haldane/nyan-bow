@@ -1,0 +1,17 @@
+#use-added-syntax(jitx)
+defpackage NAYN/unknown/LOGO-5 :
+  import core
+  import collections
+  import jitx
+  import jitx/commands
+  import ocdb/defaults
+  import ocdb/symbols
+  import ocdb/box-symbol
+  import NAYN/board
+
+public pcb-landpattern LOGO-5 :
+  layer(Silkscreen("F-SilkS", Top)) = Text(">REF", 1.0, C, loc(0.0, 0.0))
+  layer(Silkscreen("F-SilkS", Top)) = Text(">VALUE", 1.0, C, loc(0.75, 0.0))
+  
+public pcb-component component :
+  assign-landpattern(LOGO-5)

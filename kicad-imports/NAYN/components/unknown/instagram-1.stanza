@@ -1,0 +1,28 @@
+#use-added-syntax(jitx)
+defpackage NAYN/unknown/instagram-1 :
+  import core
+  import collections
+  import jitx
+  import jitx/commands
+  import ocdb/defaults
+  import ocdb/symbols
+  import ocdb/box-symbol
+  import NAYN/board
+
+public pcb-landpattern instagram-1 :
+  layer(Silkscreen("B-SilkS", Top)) = Text(">REF", 1.524, C, loc(0.0, 4.363525, 145.0))
+  layer(Silkscreen("B-SilkS", Top)) = Text(">VALUE", 1.524, C, loc(0.0, -4.363525, 145.0))
+  layer(Silkscreen("B-SilkS", Top)) = Polyline(0.12, [Arc(-0.6, -0.5, 0.3, 90.0, 90.0)])
+  layer(Silkscreen("B-SilkS", Top)) = Polyline(0.12, [Arc(0.0, 0.0, 0.4, 0.0, 360.0)])
+  layer(Silkscreen("B-SilkS", Top)) = Polyline(0.12, [Arc(0.7, -0.5, 0.3, 180.0, 90.0)])
+  layer(Silkscreen("B-SilkS", Top)) = Line(0.12, [Point(0.7, -0.8), Point(-0.6, -0.8)])
+  layer(Silkscreen("B-SilkS", Top)) = Line(0.12, [Point(-0.6, 1.0), Point(0.7, 1.0)])
+  layer(Silkscreen("B-SilkS", Top)) = Polyline(0.12, [Arc(0.7, 0.7, 0.3, 270.0, 90.0)])
+  layer(Silkscreen("B-SilkS", Top)) = Polyline(0.12, [Arc(-0.6, 0.7, 0.3, 0.0, 90.0)])
+  layer(Silkscreen("B-SilkS", Top)) = Line(0.12, [Point(1.0, -0.5), Point(1.0, 0.7)])
+  layer(Silkscreen("B-SilkS", Top)) = Line(0.12, [Point(-0.9, 0.7), Point(-0.9, -0.5)])
+  layer(Silkscreen("B-SilkS", Top)) = Polyline(0.12, [Arc(0.6, 0.6, 0.05, 0.0, 360.0)])
+  layer(Silkscreen("B-SilkS", Top)) = Polyline(0.12, [Arc(0.6, 0.6, 0.1, 0.0, 360.0)])
+  
+public pcb-component component :
+  assign-landpattern(instagram-1)

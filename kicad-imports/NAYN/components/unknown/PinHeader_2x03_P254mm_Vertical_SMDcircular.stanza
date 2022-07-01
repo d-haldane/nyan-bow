@@ -1,0 +1,69 @@
+#use-added-syntax(jitx)
+defpackage NAYN/unknown/PinHeader_2x03_P254mm_Vertical_SMDcircular :
+  import core
+  import collections
+  import jitx
+  import jitx/commands
+  import ocdb/defaults
+  import ocdb/symbols
+  import ocdb/box-symbol
+  import NAYN/board
+
+pcb-pad oval-smd-pad :
+  type = SMD
+  shape = Capsule(1.7, 1.7, loc(0.0, 0.0))
+  layer(Paste(Top)) = Capsule(1.7, 1.7, loc(0.0, 0.0))
+  layer(SolderMask(Top)) = Capsule(1.7, 1.7, loc(0.0, 0.0))
+
+pcb-pad rect-smd-pad :
+  type = SMD
+  shape = Rectangle(1.7, 1.7)
+  layer(Paste(Top)) = Rectangle(1.7, 1.7)
+  layer(SolderMask(Top)) = Rectangle(1.7, 1.7)
+
+public pcb-landpattern PinHeader_2x03_P254mm_Vertical_SMDcircular :
+  pad p[1] : rect-smd-pad at loc(0.0, 0.0) on Top
+  pad p[2] : oval-smd-pad at loc(2.54, 0.0) on Top
+  pad p[3] : oval-smd-pad at loc(0.0, -2.54) on Top
+  pad p[4] : oval-smd-pad at loc(2.54, -2.54) on Top
+  pad p[5] : oval-smd-pad at loc(0.0, -5.08) on Top
+  pad p[6] : oval-smd-pad at loc(2.54, -5.08) on Top
+  
+  layer(Courtyard(Top)) = Polygon([    
+    Point(4.35, 1.8), 
+    Point(-1.8, 1.8), 
+    Point(-1.8, -6.85), 
+    Point(4.35, -6.85)])
+  layer(Silkscreen("F-SilkS", Top)) = Text(">REF", 1.0, C, loc(0.0, 4.87))
+  layer(Finish(Top)) = Text(">VALUE", 1.0, C, loc(0.0, -4.87))
+  layer(Finish(Top)) = Text("%R", 1.0, C, loc(0.0, 0.0, 270.0))
+  layer(Silkscreen("F-SilkS", Top)) = Line(0.12, [Point(-1.33, 1.33), Point(0.0, 1.33)])
+  layer(Silkscreen("F-SilkS", Top)) = Line(0.12, [Point(-1.33, 0.0), Point(-1.33, 1.33)])
+  layer(Silkscreen("F-SilkS", Top)) = Line(0.12, [Point(1.27, 1.33), Point(3.87, 1.33)])
+  layer(Silkscreen("F-SilkS", Top)) = Line(0.12, [Point(1.27, -1.27), Point(1.27, 1.33)])
+  layer(Silkscreen("F-SilkS", Top)) = Line(0.12, [Point(-1.33, -1.27), Point(1.27, -1.27)])
+  layer(Silkscreen("F-SilkS", Top)) = Line(0.12, [Point(3.87, 1.33), Point(3.87, -6.41)])
+  layer(Silkscreen("F-SilkS", Top)) = Line(0.12, [Point(-1.33, -1.27), Point(-1.33, -6.41)])
+  layer(Silkscreen("F-SilkS", Top)) = Line(0.12, [Point(-1.33, -6.41), Point(3.87, -6.41)])
+  layer(Finish(Top)) = Line(0.1, [Point(-1.27, 0.0), Point(0.0, 1.27)])
+  layer(Finish(Top)) = Line(0.1, [Point(-1.27, -6.35), Point(-1.27, 0.0)])
+  layer(Finish(Top)) = Line(0.1, [Point(3.81, -6.35), Point(-1.27, -6.35)])
+  layer(Finish(Top)) = Line(0.1, [Point(3.81, 1.27), Point(3.81, -6.35)])
+  layer(Finish(Top)) = Line(0.1, [Point(0.0, 1.27), Point(3.81, 1.27)])
+  
+  model3d = Model3D("PinHeader_2x03_P2.54mm_Vertical.wrl",
+    Vec3D(0.0, 0.0, 0.0),
+    Vec3D(1.0, 1.0, 1.0),
+    Vec3D(0.0, 0.0, 0.0))
+  
+public pcb-component component :
+  pin-properties :
+    [pin:Ref | pads:Ref ...]
+    [p[1] | p[1]]
+    [p[2] | p[2]]
+    [p[3] | p[3]]
+    [p[4] | p[4]]
+    [p[5] | p[5]]
+    [p[6] | p[6]]
+    
+  assign-landpattern(PinHeader_2x03_P254mm_Vertical_SMDcircular)
