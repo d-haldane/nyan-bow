@@ -9,8 +9,8 @@ val scale-p = 3.0
 defn point (x:Double,y: Double) :
   Point(x * scale-p, (y - 10.0) * scale-p ) 
 
+  ; point(8.744022, 25.734815)
 public val outline = Polyline(0.1, [
-  point(8.744022, 25.734815)
   point(-3.198688, 25.734815)
   point(22.913695, 25.734815)
   point(22.913695, 23.891517)
@@ -81,7 +81,8 @@ public val outline = Polyline(0.1, [
   point(-5.673505, 22.62751)
   point(-4.802732, 22.62751)
   point(-4.802732, 23.891517)
-  point(-3.198688, 23.891517)])
+  point(-3.198688, 23.891517)
+  point(-3.198688, 25.734815)])
 
 public pcb-module nyancat :
 

@@ -4,13 +4,15 @@ defpackage design-template :
   import jitx
   import jitx/commands
   import ocdb/utils/generic-components
+  import ocdb/utils/generator-utils
+  import ocdb/utils/bundles
 
 ; =========================
 ; Module to run as a design
 ; ==========================
 val board-shape = NAYN/outline
 
-pcb-module taste-the-rainbow (rows, columns):
+pcb-module taste-the-rainbow (rows:Int, columns:Int):
   val spacing = 6.0
 
   port rgba : rgb-led[rows][columns]
@@ -38,26 +40,63 @@ pcb-module taste-the-rainbow (rows, columns):
       net (led[r][c].B rgba[r][c].b)
       net (led[r][c].p[1] rgba[r][c].a)
       place(led[r][c]) at rainbow-pose(r, c) on Top
-    ;   if c % 2 == 0 :
-    ;     if r > 0 :
-    ;       ; net (led[r - 1][c].DOUT led[r][c].DIN)
-    ;   else :
-    ;     if r > 0 :
-    ;       ; net (led[r - 1][c].DIN led[r][c].DOUT)
-    ; if c > 0 :
-    ;   if c % 2 == 0 :
-    ;     ; net (led[0][c].DIN led[0][c - 1].DOUT)  
-    ;   else :
-    ;     ; net (led[rows - 1][c].DIN led[rows - 1][c - 1].DOUT)  
 
 pcb-module my-design :
   inst NAYN : NAYN/nyancat
   place(NAYN) at loc(0.0, 0.0) on Top
-  
+   
   val rows = 10
   val columns = 8
   inst rainbow : taste-the-rainbow(rows, columns)
   place(rainbow) at loc(-60.0, -27.0) on Top
+
+  inst usb : usb2-on-a-usb-c-connector(ocdb/components/korean-hroparts-elec/TYPE-C-31-M-23/module(SinkDefault))
+  ; inst usb : usb2-on-a-usb-c-connector()
+  net GND (usb.usb-2.vbus.gnd)
+  symbol(GND) = ocdb/utils/symbols/ground-sym
+  property(GND.voltage) = typ(0.0)
+  ;; set net classes for usb
+  ; val usb-net-class = NetClass(`USB-net-class, [`min-trace => 0.8])
+  ; net USB-NET-DN (usb.con.conn.DN1)
+  ; net USB-NET-DP (usb.con.conn.DP1)
+  ; property(USB-NET-DP.net-class) = usb-net-class
+  ; property(USB-NET-DP.net-class) = usb-net-class
+
+  ; Power - battery
+  inst battery : database-part(["vendor_part_numbers.lcsc" => "C47647"])
+  net (battery.p[1] GND)
+
+  ; battery charging
+  inst charger : components/BQ24078RGTR/module
+  net VBAT (battery.p[2] charger.bat+)
+  net (charger.gnd GND)
+
+  ; power switch
+  inst sw : database-part(["manufacturer" => "G-Switch", "mpn" => "MK-12C02-G025"])
+  net SW-VOUT (sw.p[2] charger.vout)
+  net P4V2 (sw.p[3])
+  property(P4V2.voltage) = min-max(3.5 5.0)
+  net VBUS (charger.vin usb.usb-2.vbus.vdd)
+
+  ; power - LDO
+  inst ld : components/AP2125K-2_8TRG1/module
+  net (P4V2 ld.vin ld.en)
+  net (ld.gnd, GND)
+  net P2V8 (ld.vout)
+
+  ; set net symbols
+  symbol(VBAT) = ocdb/utils/symbols/supply-sym
+  symbol(VBUS) = ocdb/utils/symbols/supply-sym
+  symbol(P4V2) = ocdb/utils/symbols/supply-sym
+  symbol(P2V8) = ocdb/utils/symbols/supply-sym
+
+  ; RP2040
+  inst rpi : components/RP2040/module
+  net (GND rpi.gnd)
+  net (usb.usb-2.data rpi.usb)
+  schematic-group(rpi) = rpi
+  layout-group(rpi) = rpi
+  net (rpi.vdd P2V8)
 
 
 ; ========================================
