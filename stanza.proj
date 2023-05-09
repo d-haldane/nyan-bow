@@ -1,4 +1,2 @@
-include "open-components-database/stanza.proj"
-include "jitx-2048-imported/stanza.proj"
-package components/WS2812B defined-in "WS2812B.stanza"
+include "hackathon-2022/stanza.proj"
 include "kicad-imports/NAYN/stanza.proj"

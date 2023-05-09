@@ -3,22 +3,22 @@ defpackage design-template :
   import core
   import jitx
   import jitx/commands
+  import ocdb/utils/generic-components
 
 ; =========================
 ; Module to run as a design
 ; ==========================
-val board-shape = Rectangle(300.0, 90.0)
+val board-shape = NAYN/outline
 
-pcb-module taste-the-rainbow :
-  pin input
-  val rows = 10
-  val columns = 16
-  val spacing = 7.0
+pcb-module taste-the-rainbow (rows, columns):
+  val spacing = 6.0
 
-  inst led : components/WS2812B/component[rows][columns]
-  net (led[0][0].DIN input)
+  port rgba : rgb-led[rows][columns]
+
+  inst led : database-part(["manufacturer" => "Foshan NationStar Optoelectronics", "mpn" => "NH-Z1921RGBA-SF"])[rows][columns]
+  ; net (led[0][0].DIN input)
   defn rainbow-pose (row:Int, column:Int) -> Pose:
-    val diff = math/sin((2.0 * 3.14159 * to-double(column)) / 15.0) * 5.0
+    val diff = math/sin((-5.0 * 3.14159 * to-double(column)) / 15.0) * 5.0
     val rot = 
       if column % 2 == 0 :
         -1.0
@@ -33,43 +33,57 @@ pcb-module taste-the-rainbow :
 
   for c in 0 to columns do :
     for r in 0 to rows do :
+      net (led[r][c].R rgba[r][c].r)
+      net (led[r][c].G rgba[r][c].g)
+      net (led[r][c].B rgba[r][c].b)
+      net (led[r][c].p[1] rgba[r][c].a)
       place(led[r][c]) at rainbow-pose(r, c) on Top
-      if c % 2 == 0 :
-        if r > 0 :
-          net (led[r - 1][c].DOUT led[r][c].DIN)
-      else :
-        if r > 0 :
-          net (led[r - 1][c].DIN led[r][c].DOUT)
-    if c > 0 :
-      if c % 2 == 0 :
-        net (led[0][c].DIN led[0][c - 1].DOUT)  
-      else :
-        net (led[rows - 1][c].DIN led[rows - 1][c - 1].DOUT)  
-
+    ;   if c % 2 == 0 :
+    ;     if r > 0 :
+    ;       ; net (led[r - 1][c].DOUT led[r][c].DIN)
+    ;   else :
+    ;     if r > 0 :
+    ;       ; net (led[r - 1][c].DIN led[r][c].DOUT)
+    ; if c > 0 :
+    ;   if c % 2 == 0 :
+    ;     ; net (led[0][c].DIN led[0][c - 1].DOUT)  
+    ;   else :
+    ;     ; net (led[rows - 1][c].DIN led[rows - 1][c - 1].DOUT)  
 
 pcb-module my-design :
-  inst rainbow : taste-the-rainbow
-  inst esp32 : jitx-2048/main
   inst NAYN : NAYN/nyancat
-  place(esp32) at loc(-140.0, -69.2) on Top
-  place(NAYN) at loc(45.0, 0.0) on Top
-  place(rainbow) at loc(-75.0, -25.0) on Top
+  place(NAYN) at loc(0.0, 0.0) on Top
+  
+  val rows = 10
+  val columns = 8
+  inst rainbow : taste-the-rainbow(rows, columns)
+  place(rainbow) at loc(-60.0, -27.0) on Top
 
 
 ; ========================================
 ; Configure the design and view the result
 ; ========================================
-defn run-design (circuit:Instantiable, outline:Shape) :
-  set-design-directory("CAD")
+defn run-design (circuit:Instantiable, run-checks?:True|False) :
+  ; set-paper(ANSI-A5)
+  set-current-design("hackathon-2022")
+  set-board(ocdb/utils/defaults/default-board(ocdb/manufacturers/stackups/jlcpcb-jlc2313, board-shape))
+  set-rules(ocdb/manufacturers/rules/jlcpcb-rules)
+  var main-module = circuit
 
-  set-main-module(circuit) ; Treat the provided module as a design, and compile it.
-
-  set-board(ocdb/defaults/default-board(ocdb/stackups/jlcpcb-jlc2313, outline))
-  set-rules(ocdb/rules/jlcpcb-rules)
-
-  run-checks("checks.txt")
-  view-board()
-  ; view-schematic()
+  if run-checks? :
+    main-module = ocdb/utils/generator-utils/run-final-passes(circuit) ; Analyze design with a pass
+  
+  set-main-module(main-module) ; Treat the provided module as a design, and compile it.
+  set-use-layout-groups()
+  set-paper(ANSI-A)
+  if run-checks? :
+    run-checks("checks.txt")
+    view-design-explorer()
+    export-design()
+  else:  
+    view-board()
+    view-schematic()
+    view-design-explorer()
 
 ; ====================
 ; Export design to CAD
@@ -89,4 +103,4 @@ defn update-design () :
 ; ============
 ; Run the code
 ; ============
-run-design(my-design, board-shape)
+run-design(my-design, false)

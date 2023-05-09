@@ -1,6 +1,0 @@
-(module JLCtoolinghole (layer F.Cu)  
-  (pad 1 thru_hole oval
-    (at 0.0 0.0 0.0)
-    (size 1.152 1.152)
-    (drill 1.152)
-    (layers *.Cu )))

@@ -2,3 +2,6 @@
 	path = open-components-database
 	url = https://github.com/JITx-Inc/open-components-database.git
 	branch = master
+[submodule "hackathon-2022"]
+	path = hackathon-2022
+	url = git@github.com:JITx-Inc/hackathon-2022.git
