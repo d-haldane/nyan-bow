@@ -59,29 +59,6 @@ pcb-module taste-the-rainbow (rows:Int, columns:Int, x-pitch:Double, y-pitch:Dou
       place(led[r][c]) at rainbow-pose(r, c) on Top
 
 pcb-module my-design :
-  inst NAYN : NAYN/nyancat
-  place(NAYN) at loc(0.0, 0.0) on Top
-   
-  val rows = 8
-  val columns = 12
-  inst rainbow : taste-the-rainbow(rows, columns, 4.5 , 7.0)
-  place(rainbow) at loc(-65.0, -25.0) on Top
-
-
-  net led-a-ctrl:pin[8] ()
-  for drv in 0 to 2 do :
-    inst drive : led-driver(drv)
-    require ctrl-bank : gpio[36] from drive.driver
-
-    for j in 0 to 4 do :
-      for k in 0 to columns do :
-        net (rainbow.rgba[j * drv][k].r ctrl-bank[k * 3].gpio)
-        net (rainbow.rgba[j * drv][k].g ctrl-bank[1 + k * 3].gpio)
-        net (rainbow.rgba[j * drv][k].b ctrl-bank[2 + k * 3].gpio)
-        net (rainbow.rgba[j * drv][k].a led-a-ctrl[j * drv])
-
-  inst amp : main/class-d-audio
-
   inst usb : usb2-on-a-usb-c-connector(ocdb/components/korean-hroparts-elec/TYPE-C-31-M-23/module(SinkDefault))
 
   net GND (usb.usb-2.vbus.gnd)
@@ -110,12 +87,6 @@ pcb-module my-design :
   net (ld.gnd, GND)
   net P2V8 (ld.vout)
 
-  ; set net symbols
-  symbol(VBAT) = ocdb/utils/symbols/supply-sym
-  symbol(VBUS) = ocdb/utils/symbols/supply-sym
-  symbol(P4V2) = ocdb/utils/symbols/supply-sym
-  symbol(P2V8) = ocdb/utils/symbols/supply-sym
-
   ; RP2040
   inst rpi : components/RP2040/module
   net (GND rpi.gnd)
@@ -124,13 +95,46 @@ pcb-module my-design :
   layout-group(rpi) = rpi
   net (rpi.vdd P2V8)
 
+  require led-data : i2c from rpi.mcu
+  val drive-i2c = components/logic-level-shifter/level-shift-i2c(led-data, P2V8, P4V2)
+
+  val rows = 8
+  val columns = 12
+  inst rainbow : taste-the-rainbow(rows, columns, 4.5 , 7.0)
+  place(rainbow) at loc(-65.0, -25.0) on Top
+
+  net led-a-ctrl:pin[8] ()
+  for drv in 0 to 2 do :
+    inst drive : led-driver(drv)
+    net (drive.gnd GND)
+    net (drive.vdd P4V2)
+    net (drive.i2c drive-i2c)
+    require ctrl-bank : gpio[36] from drive.driver
+
+    for j in 0 to 4 do :
+      for k in 0 to columns do :
+        net (rainbow.rgba[j + drv * 4][k].r ctrl-bank[k * 3].gpio)
+        net (rainbow.rgba[j + drv * 4][k].g ctrl-bank[1 + k * 3].gpio)
+        net (rainbow.rgba[j + drv * 4][k].b ctrl-bank[2 + k * 3].gpio)
+        net (rainbow.rgba[j + drv * 4][k].a led-a-ctrl[j + drv * 4])
+
+  inst amp : main/class-d-audio
+
+  ; set net symbols
+  symbol(VBAT) = ocdb/utils/symbols/supply-sym
+  symbol(VBUS) = ocdb/utils/symbols/supply-sym
+  symbol(P4V2) = ocdb/utils/symbols/supply-sym
+  symbol(P2V8) = ocdb/utils/symbols/supply-sym
+
+  inst NAYN : NAYN/nyancat
+  place(NAYN) at loc(0.0, 0.0) on Top
 
 ; ========================================
 ; Configure the design and view the result
 ; ========================================
 defn run-design (circuit:Instantiable, run-checks?:True|False) :
   ; set-paper(ANSI-A5)
-  set-current-design("hackathon-2022")
+  set-current-design("nyan-blaster")
   set-board(ocdb/utils/defaults/default-board(ocdb/manufacturers/stackups/jlcpcb-jlc2313, board-shape))
   set-rules(ocdb/manufacturers/rules/jlcpcb-rules)
   var main-module = circuit
