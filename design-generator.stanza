@@ -12,26 +12,43 @@ defpackage design-template :
 ; ==========================
 val board-shape = NAYN/outline
 
-pcb-module taste-the-rainbow (rows:Int, columns:Int):
-  val spacing = 6.0
+public pcb-module led-driver (address:Int):
+  pin vdd
+  pin gnd
+  port i2c : i2c
 
+  public inst driver : components/IS31FL3236A-QFLS2-TR/component
+  bypass-cap-strap(driver.VCC, gnd, 2.2e-6)
+  net (driver.VCC vdd)
+  net (driver.GND[0] driver.GND[1] driver.EPAD gnd)
+  net (vdd driver.SDB)
+  net (i2c.sda driver.SDA)
+  net (i2c.scl driver.SCL)
+  res-strap(driver.R-EXT gnd, 3.3e3)
+
+  switch(address) :
+    0 : 
+      net (driver.AD gnd)
+    1 : 
+      net (driver.AD driver.SCL)
+    2 : 
+      net (driver.AD driver.SDA)
+    3 : 
+      net (driver.AD driver.vdd)
+    else :
+      fatal(to-string("Unsupported I2C address: %_ on IS31FL3236A" % [address]))
+
+  schematic-group(self) = led-driver
+  layout-group(self) = led-driver
+
+pcb-module taste-the-rainbow (rows:Int, columns:Int, x-pitch:Double, y-pitch:Double):
   port rgba : rgb-led[rows][columns]
 
   inst led : database-part(["manufacturer" => "Foshan NationStar Optoelectronics", "mpn" => "NH-Z1921RGBA-SF"])[rows][columns]
   ; net (led[0][0].DIN input)
   defn rainbow-pose (row:Int, column:Int) -> Pose:
-    val diff = math/sin((-5.0 * 3.14159 * to-double(column)) / 15.0) * 5.0
-    val rot = 
-      if column % 2 == 0 :
-        -1.0
-      else : 
-        1.0
-    val fred = 
-      if row % 2 == 0 :
-        -90.0
-      else :
-        0.0
-    loc(to-double(column) * spacing, diff + to-double(row) * spacing, rot * 90.0 + fred)
+    val diff = math/sin((-3.0 * 3.14159 * to-double(column)) / 15.0) * 5.0
+    loc(to-double(column) * x-pitch, diff + to-double(row) * y-pitch)
 
   for c in 0 to columns do :
     for r in 0 to rows do :
@@ -45,22 +62,31 @@ pcb-module my-design :
   inst NAYN : NAYN/nyancat
   place(NAYN) at loc(0.0, 0.0) on Top
    
-  val rows = 10
-  val columns = 8
-  inst rainbow : taste-the-rainbow(rows, columns)
-  place(rainbow) at loc(-60.0, -27.0) on Top
+  val rows = 8
+  val columns = 12
+  inst rainbow : taste-the-rainbow(rows, columns, 4.5 , 7.0)
+  place(rainbow) at loc(-65.0, -25.0) on Top
+
+
+  net led-a-ctrl:pin[8] ()
+  for drv in 0 to 2 do :
+    inst drive : led-driver(drv)
+    require ctrl-bank : gpio[36] from drive.driver
+
+    for j in 0 to 4 do :
+      for k in 0 to columns do :
+        net (rainbow.rgba[j * drv][k].r ctrl-bank[k * 3].gpio)
+        net (rainbow.rgba[j * drv][k].g ctrl-bank[1 + k * 3].gpio)
+        net (rainbow.rgba[j * drv][k].b ctrl-bank[2 + k * 3].gpio)
+        net (rainbow.rgba[j * drv][k].a led-a-ctrl[j * drv])
+
+  inst amp : main/class-d-audio
 
   inst usb : usb2-on-a-usb-c-connector(ocdb/components/korean-hroparts-elec/TYPE-C-31-M-23/module(SinkDefault))
-  ; inst usb : usb2-on-a-usb-c-connector()
+
   net GND (usb.usb-2.vbus.gnd)
   symbol(GND) = ocdb/utils/symbols/ground-sym
   property(GND.voltage) = typ(0.0)
-  ;; set net classes for usb
-  ; val usb-net-class = NetClass(`USB-net-class, [`min-trace => 0.8])
-  ; net USB-NET-DN (usb.con.conn.DN1)
-  ; net USB-NET-DP (usb.con.conn.DP1)
-  ; property(USB-NET-DP.net-class) = usb-net-class
-  ; property(USB-NET-DP.net-class) = usb-net-class
 
   ; Power - battery
   inst battery : database-part(["vendor_part_numbers.lcsc" => "C47647"])
