@@ -134,7 +134,7 @@ pcb-module my-design :
 ; ========================================
 defn run-design (circuit:Instantiable, run-checks?:True|False) :
   ; set-paper(ANSI-A5)
-  set-current-design("nyan-blaster")
+  set-current-design("nyan-blasterr")
   set-board(ocdb/utils/defaults/default-board(ocdb/manufacturers/stackups/jlcpcb-jlc2313, board-shape))
   set-rules(ocdb/manufacturers/rules/jlcpcb-rules)
   var main-module = circuit
@@ -147,11 +147,11 @@ defn run-design (circuit:Instantiable, run-checks?:True|False) :
   set-paper(ANSI-A)
   if run-checks? :
     run-checks("checks.txt")
-    view-design-explorer()
-    export-design()
+    ; view-design-explorer()
+    ; export-design()
   else:  
     view-board()
-    view-schematic()
+    ; view-schematic()
     view-design-explorer()
 
 ; ====================
